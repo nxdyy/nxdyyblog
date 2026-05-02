@@ -1,0 +1,13 @@
+<footer id="gal-footer">
+    <div class="container">
+        Copyright © 2025-2026 <%= config.author ? config.author : '' %> Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>.&nbsp;Theme by <a href="https://github.com/ZEROKISEKI" target="_blank">AONOSORA</a>
+        <% if(theme.custom_footer && theme.custom_footer.enable && theme.custom_footer.content) { %>
+            <%- theme.custom_footer.content %>
+        <% } %>
+    </div>
+</footer>
+
+<!-- 回到顶端 -->
+<div id="gal-gotop">
+    <i class="fa fa-angle-up"></i>
+</div>

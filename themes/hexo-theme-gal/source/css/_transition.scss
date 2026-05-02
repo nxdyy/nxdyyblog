@@ -1,0 +1,50 @@
+/* 无刷新页面转场样式 */
+#mainstay {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    will-change: opacity, transform;
+}
+
+.page-transitioning {
+    pointer-events: none !important;
+}
+
+.page-transitioning a {
+    pointer-events: none !important;
+}
+
+/* 加载中提示样式 */
+#page-loader {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10000;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px 30px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+#page-loader .loader-spinner {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto 10px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+#page-loader .loader-text {
+    font-size: 14px;
+    color: #eee;
+}
