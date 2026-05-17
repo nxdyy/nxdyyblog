@@ -78,6 +78,62 @@ if [ -f /etc/nv_tegra_release ] ; then
 
 将`https://ollama.com/download`全部替换为镜像站的地址，例如`https://cdn.gh-proxy.org/https://github.com/ollama/ollama/releases/download/v0.24.0/`
 
+## 3.直接修改脚本
+
+我换了很多镜像站，全是下载到一半eof的，快死过去了
+
+解决方案是这样的
+
+手动下载文件并且放到脚本运行目录下
+
+修改脚本`download_and_extract()`函数为
+
+```bash
+download_and_extract() {
+    local url_base="$1"
+    local dest_dir="$2"
+    local filename="$3"
+
+    local local_zst="./${filename}.tar.zst"
+    local local_tgz="./${filename}.tgz"
+
+    # 1. 优先使用本地 .tar.zst
+    if [ -f "$local_zst" ]; then
+        status "Using local file: $local_zst"
+        if ! available zstd; then
+            error "Local file requires zstd but it's not installed."
+        fi
+        zstd -d "$local_zst" -c | $SUDO tar -xf - -C "$dest_dir"
+        return 0
+    fi
+
+    # 2. 再尝试本地 .tgz
+    if [ -f "$local_tgz" ]; then
+        status "Using local file: $local_tgz"
+        $SUDO tar -xzf "$local_tgz" -C "$dest_dir"
+        return 0
+    fi
+
+    # 3. 本地没有 → 才下载 .tar.zst
+    if curl --fail --silent --head --location "${url_base}/${filename}.tar.zst${VER_PARAM}" >/dev/null 2>&1; then
+        if ! available zstd; then
+            error "This version requires zstd for extraction. Please install zstd."
+        fi
+        status "Downloading ${filename}.tar.zst"
+        curl --fail --show-error --location --progress-bar \
+            "${url_base}/${filename}.tar.zst${VER_PARAM}" | \
+            zstd -d | $SUDO tar -xf - -C "${dest_dir}"
+        return 0
+    fi
+
+    # 4. 下载 .tgz 作为 fallback
+    status "Downloading ${filename}.tgz"
+    curl --fail --show-error --location --progress-bar \
+        "${url_base}/${filename}.tgz${VER_PARAM}" | \
+        $SUDO tar -xzf - -C "${dest_dir}"
+}
+```
+
 # 二、安装ollama
 
 ## 安装
