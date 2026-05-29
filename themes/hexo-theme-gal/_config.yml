@@ -153,7 +153,7 @@ use_comment: false
 # 自定义页尾配置
 custom_footer:
   enable: true
-  content: "<script src=\"//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js\" defer></script>"  # 自定义页尾内容，支持HTML
+  content: "<a href='https://beian.miit.gov.cn/' target='_blank'>晋ICP备2026006275号-1</a>"  # 自定义页尾内容，支持HTML
   # 示例:
   # enable: true
   # content: "<p>© 2024 My Blog | Powered by Hexo</p>"
