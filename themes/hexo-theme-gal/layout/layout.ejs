@@ -25,46 +25,54 @@
     <%- partial('_partial/footer') %>
 </body>
 <%- js(['js/activate-power-mode.js']) %>
-<script>
+<script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 配置highslide
+        if (typeof hs !== 'undefined') {
+            hs.graphicsDir = '/js/highslide/graphics/'
+            hs.outlineType = "rounded-white";
+            hs.dimmingOpacity = 0.8;
+            hs.outlineWhileAnimating = true;
+            hs.showCredits = false;
+            hs.captionEval = "this.thumb.alt";
+            hs.numberPosition = "caption";
+            hs.align = "center";
+            hs.transitions = ["expand", "crossfade"];
+            hs.lang.number = '共%2张图, 当前是第%1张';
+            hs.addSlideshow({
+              interval: 5000,
+              repeat: true,
+              useControls: true,
+              fixedControls: "fit",
+              overlayOptions: {
+                opacity: 0.75,
+                position: "bottom center",
+                hideOnMouseOut: true
+              }
+            })
+        }
 
-    // 配置highslide
-	hs.graphicsDir = '/js/highslide/graphics/'
-    hs.outlineType = "rounded-white";
-    hs.dimmingOpacity = 0.8;
-    hs.outlineWhileAnimating = true;
-    hs.showCredits = false;
-    hs.captionEval = "this.thumb.alt";
-    hs.numberPosition = "caption";
-    hs.align = "center";
-    hs.transitions = ["expand", "crossfade"];
-    hs.lang.number = '共%2张图, 当前是第%1张';
-    hs.addSlideshow({
-      interval: 5000,
-      repeat: true,
-      useControls: true,
-      fixedControls: "fit",
-      overlayOptions: {
-        opacity: 0.75,
-        position: "bottom center",
-        hideOnMouseOut: true
-      }
-    })
-
-    // 初始化aos
-    AOS.init({
-      duration: 1000,
-      delay: 0,
-      easing: 'ease-out-back'
+        // 初始化aos
+        if (typeof AOS !== 'undefined') {
+            AOS.init({
+              duration: 1000,
+              delay: 0,
+              easing: 'ease-out-back'
+            });
+        }
     });
-
 </script>
-<script>
-	POWERMODE.colorful = '<%= theme.power_mode.colorful %>';    // make power mode colorful
-	POWERMODE.shake = '<%= theme.power_mode.colorful %>';       // turn off shake
-	// TODO 这里根据具体情况修改
-	document.body.addEventListener('input', POWERMODE);
+<script defer>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof POWERMODE !== 'undefined') {
+            POWERMODE.colorful = '<%= theme.power_mode.colorful %>';    // make power mode colorful
+            POWERMODE.shake = '<%= theme.power_mode.colorful %>';       // turn off shake
+            // TODO 这里根据具体情况修改
+            document.body.addEventListener('input', POWERMODE);
+        }
+    });
 </script>
-<script>
+<script defer>
     window.slideConfig = {
       prefix: '<%- theme.slide_background.use_url ? theme.slide_background.prefix : url_for(`imgs/${theme.slide_background.prefix}`) %>',
       ext: '<%- theme.slide_background.ext %>',

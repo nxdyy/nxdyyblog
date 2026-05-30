@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
     <meta name="author" content="<%= config.author %>">
     <% if (config.description) { %>
     <meta name="description" content="<%= config.description %>">
@@ -23,13 +23,18 @@
     <title><%= title.join(' | ') %></title>
     <link rel="icon" href="/imgs/favicon.jpg" type="image/jpeg">
     <link href="<%- config.url %>" rel="prefetch" />
+    <link rel="preconnect" href="<%- config.url %>" />
+    <link rel="dns-prefetch" href="<%- config.url %>" />
 
-    <%- css(['css/bootstrap.min.css', 'css/aos.css' , 'css/style.css']) %>
-    <%- js('js/jquery.min.js') %>
-    <%- js('js/bootstrap.min.js') %>
-    <%- js('js/aos.js') %>
-    <%- js('js/highslide/highslide-full.min.js') %>
-    <%- css('js/highslide/highslide.css') %>
+    <%- css(['css/bootstrap.min.css', 'css/style.css']) %>
+    <link rel="preload" href="/css/aos.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/css/aos.css"></noscript>
+    <link rel="preload" href="/js/highslide/highslide.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="/js/highslide/highslide.css"></noscript>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js" defer></script>
+    <script src="/js/aos.js" defer></script>
+    <script src="/js/highslide/highslide-full.min.js" defer></script>
     <style type="text/css">
         @media (max-width: 768px) {
             body {
