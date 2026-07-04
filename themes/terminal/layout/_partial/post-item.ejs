@@ -1,0 +1,42 @@
+<%
+var post = item;
+var excerptLen = theme.excerpt_length || 200;
+var content = post.content || '';
+// Strip HTML tags for preview
+var plainText = content.replace(/<[^>]+>/g, '').replace(/<\x25.*?\x25>/g, '');
+var preview = plainText.substring(0, excerptLen);
+if (plainText.length > excerptLen) preview += '...';
+
+// Excerpt is the short description, preview is the content preview
+var excerptText = '';
+if (post.excerpt) {
+  excerptText = strip_html(post.excerpt);
+}
+
+var categories = [];
+if (post.categories && post.categories.length) {
+  post.categories.forEach(function(cat) { categories.push(cat.name); });
+}
+var categoryStr = categories.length ? categories.join(', ') : 'uncategorized';
+
+var dateStr = post.date ? post.date.format('YYYY-MM-DD') : '';
+%>
+<article class="post-item" data-url="<%- url_for(post.path) %>">
+  <div class="post-title">
+    <span class="title-marker">&gt; </span><a href="<%- url_for(post.path) %>"><%= post.title || 'Untitled' %></a>
+  </div>
+  <% if (excerptText) { %>
+  <div class="post-excerpt orange"><%= excerptText %></div>
+  <div class="post-preview gray"><%= preview %></div>
+  <% } else { %>
+  <div class="post-excerpt orange"><%= preview.substring(0, 80) %><%= plainText.length > 80 ? '...' : '' %></div>
+  <% } %>
+  <div class="post-meta">
+    <span class="meta-item"><span class="meta-label">@</span> <%= post.author || config.author %></span>
+    <span class="meta-separator gray">|</span>
+    <span class="meta-item"><span class="meta-label">date:</span> <%= dateStr %></span>
+    <span class="meta-separator gray">|</span>
+    <span class="meta-item"><span class="meta-label">cat:</span> <a href="<%- url_for(post.categories && post.categories.data[0] ? post.categories.data[0].path : 'categories') %>"><%= categoryStr %></a></span>
+  </div>
+  <div class="post-divider">----------------------------------------</div>
+</article>

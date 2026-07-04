@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="<%= config.language || 'zh-CN' %>">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <%- partial('_partial/head') %>
+</head>
+<body class="theme-dark">
+  <button id="mobile-menu-btn" title="Toggle Menu">[=]</button>
+  <button id="theme-toggle-btn" title="Toggle Theme [Ctrl+T]">[T]</button>
+  <div id="terminal-app">
+    <%- partial('_partial/sidebar') %>
+    <div id="terminal-main">
+      <%- partial('_partial/header') %>
+      <div id="terminal-search">
+        <div class="search-box">
+          <span class="prompt">&gt;</span>
+          <input type="text" id="search-input" placeholder="<%= theme.search.enable ? theme.search.placeholder : '' %>" autocomplete="off" />
+        </div>
+        <div class="shortcut-hints">
+          <span class="hint"><kbd>/</kbd> Search</span>
+          <span class="hint"><kbd>Ctrl+S</kbd> Sidebar</span>
+          <span class="hint"><kbd>Ctrl+T</kbd> Theme</span>
+          <span class="hint"><kbd>Esc</kbd> Clear</span>
+        </div>
+      </div>
+      <div id="terminal-content">
+        <%- body %>
+      </div>
+      <%- partial('_partial/footer') %>
+    </div>
+  </div>
+  <%- partial('_partial/scripts') %>
+</body>
+</html>

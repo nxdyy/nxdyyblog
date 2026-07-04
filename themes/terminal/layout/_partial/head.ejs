@@ -1,0 +1,46 @@
+<meta name="generator" content="Hexo<%= config.meta_generator ? '' : '' %>">
+<%
+var title = page.title;
+if (is_home()) {
+  title = config.title;
+} else if (is_archive()) {
+  title = 'Archives';
+} else if (is_category()) {
+  title = 'Category: ' + page.category;
+} else if (is_tag()) {
+  title = 'Tag: ' + page.tag;
+}
+if (title && !is_home()) {
+  title += ' - ' + config.title;
+}
+%>
+<title><%= title %></title>
+<% if (config.description) { %>
+<meta name="description" content="<%= config.description %>">
+<% } %>
+<% if (config.keywords) { %>
+<meta name="keywords" content="<%= config.keywords %>">
+<% } %>
+<link rel="stylesheet" href="<%- url_for('css/style.css') %>">
+<% if (theme.math && theme.math.enable) { %>
+<link rel="stylesheet" href="<%= theme.math.katex_css %>">
+<% } %>
+<style>
+  @font-face {
+    font-family: 'Cascadia Code';
+    src: url('/font/CascadiaCode.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Cascadia Code';
+    src: url('/font/CascadiaCode.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+</style>
+<% if (config.feed) { %>
+<link rel="alternate" href="<%- url_for(config.feed.path || 'atom.xml') %>" title="<%= config.title %>" type="application/atom+xml">
+<% } %>

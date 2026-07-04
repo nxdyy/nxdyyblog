@@ -1,0 +1,23 @@
+<div id="archive-list">
+  <div class="list-header">
+    <span class="header-label">[Archives]</span>
+    <span class="post-count gray"><%= site.posts.length %> article(s)</span>
+  </div>
+  <div class="list-divider">----------------------------------------</div>
+  <% var last_year = 0; %>
+  <% site.posts.sort('date', -1).forEach(function(post) { %>
+  <% var year = post.date.year(); %>
+  <% if (last_year !== year) { %>
+  <% if (last_year !== 0) { %>
+  <div class="list-divider">----------------------------------------</div>
+  <% } %>
+  <div class="archive-year blue">## <%= year %> ##</div>
+  <% last_year = year; %>
+  <% } %>
+  <div class="archive-item">
+    <span class="archive-date gray"><%= post.date.format('MM-DD') %></span>
+    <span class="archive-arrow">&gt;</span>
+    <a href="<%- url_for(post.path) %>"><%= post.title || 'Untitled' %></a>
+  </div>
+  <% }); %>
+</div>

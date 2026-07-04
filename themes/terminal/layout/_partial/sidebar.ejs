@@ -1,0 +1,82 @@
+<%
+var sidebarConfig = theme.sidebar || {};
+var defaultCollapsed = sidebarConfig.default_collapsed || false;
+%>
+<aside id="terminal-sidebar" class="<%= defaultCollapsed ? 'collapsed' : '' %>">
+  <div class="sidebar-content">
+    <div class="sidebar-author">
+      <div class="author-name"><a href="<%- url_for('/') %>"><%= config.author || '' %></a></div>
+      <div class="author-subtitle gray"><%= config.subtitle || config.description || '' %></div>
+    </div>
+
+    <% if (sidebarConfig.sections && sidebarConfig.sections.categories) { %>
+    <div class="sidebar-section">
+      <div class="section-title">-- Categories --</div>
+      <div class="section-body">
+        <% site.categories.forEach(function(cat) { %>
+        <div class="sidebar-link">
+          <span class="link-arrow">&gt;</span>
+          <a href="<%- url_for(cat.path) %>"><%= cat.name %></a>
+          <span class="count gray">(<%= cat.length %>)</span>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+
+    <% if (sidebarConfig.sections && sidebarConfig.sections.tags) { %>
+    <div class="sidebar-section">
+      <div class="section-title">-- Tags --</div>
+      <div class="section-body tag-list">
+        <% site.tags.forEach(function(tag) { %>
+        <a href="<%- url_for(tag.path) %>" class="tag-item"><%= tag.name %></a>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+
+    <% if (sidebarConfig.sections && sidebarConfig.sections.recent_posts) { %>
+    <div class="sidebar-section">
+      <div class="section-title">-- Recent --</div>
+      <div class="section-body">
+        <% site.posts.sort('date', -1).limit(5).forEach(function(post) { %>
+        <div class="sidebar-link">
+          <span class="link-arrow">&gt;</span>
+          <a href="<%- url_for(post.path) %>"><%= post.title || 'Untitled' %></a>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+
+    <div class="sidebar-section">
+      <div class="section-title">-- Navigation --</div>
+      <div class="section-body">
+        <% (theme.menu || []).forEach(function(item) { %>
+        <div class="sidebar-link">
+          <span class="link-arrow">&gt;</span>
+          <a href="<%- url_for(item.url) %>"><%= item.title %></a>
+          <% if (item.shortcut) { %><span class="shortcut-key gray">[<%= item.shortcut %>]</span><% } %>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+
+    <% if (sidebarConfig.sections && sidebarConfig.sections.links && theme.links && theme.links.length) { %>
+    <div class="sidebar-section">
+      <div class="section-title">-- Links --</div>
+      <div class="section-body">
+        <% theme.links.forEach(function(link) { %>
+        <div class="sidebar-link">
+          <span class="link-arrow">&gt;</span>
+          <a href="<%= link.url %>" target="_blank" rel="noopener"><%= link.name %></a>
+        </div>
+        <% }); %>
+      </div>
+    </div>
+    <% } %>
+  </div>
+  <div class="sidebar-toggle-right" id="sidebar-toggle" title="Toggle Sidebar [Ctrl+S]">
+    <span class="toggle-icon">[&lt;]</span>
+  </div>
+</aside>
