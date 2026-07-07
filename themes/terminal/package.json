@@ -1,8 +1,0 @@
-{
-  "name": "hexo-theme-terminal",
-  "version": "1.0.0",
-  "description": "A terminal-style theme for Hexo, inspired by opencode",
-  "main": "index.js",
-  "keywords": ["hexo", "theme", "terminal", "opencode"],
-  "license": "MIT"
-}
