@@ -153,7 +153,7 @@ use_comment: false
 # 自定义页尾配置
 custom_footer:
   enable: true
-  content: "<a href='https://beian.miit.gov.cn/' target='_blank'>晋ICP备2026006275号-1</a> | <span style=\"display: inline-flex; align-items: center; vertical-align: middle;\"><img src=\"/imgs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png\" width=\"20\" style=\"margin-right: 5px;\" />  <a href=\"https://beian.mps.gov.cn/#/query/webSearch?code=61011302001964\" rel=\"noreferrer\" target=\"_blank\">晋公网安备14010502990640号</a></span>"  # 自定义页尾内容，支持HTML
+  content: "<a href='https://beian.miit.gov.cn/' target='_blank'>晋ICP备2026006275号-1</a> | <span style=\"display: inline-flex; align-items: center; vertical-align: middle;\"><img src=\"/imgs/TB1..50QpXXXXX7XpXXXXXXXXXX-40-40.png\" width=\"20\" style=\"margin-right: 5px;\" />  <a href=\"https://beian.mps.gov.cn/#/query/webSearch?code=14010502990640\" rel=\"noreferrer\" target=\"_blank\">晋公网安备14010502990640号</a></span>"  # 自定义页尾内容，支持HTML
   # 示例:
   # enable: true
   # content: "<p>© 2024 My Blog | Powered by Hexo</p>"
