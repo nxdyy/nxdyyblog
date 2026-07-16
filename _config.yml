@@ -43,17 +43,23 @@ render_drafts: false
 post_asset_folder: false
 relative_link: false
 future: true
-syntax_highlighter: highlight.js
+syntax_highlighter:
 highlight:
-  line_number: true
-  auto_detect: false
-  tab_replace: ''
-  wrap: true
-  hljs: false
+  enable: false
 prismjs:
-  preprocess: true
+  enable: false
+
+# Shiki 代码高亮配置
+# 内置主题: one-dark-pro, material-theme-palenight, github-light, github-dark
+# 更多主题: https://github.com/shikijs/shiki/blob/main/docs/themes.md
+shiki:
+  theme: one-dark-pro
   line_number: true
-  tab_replace: ''
+  beautify: true
+  highlight_copy: true
+  highlight_lang: true
+  highlight_height_limit: 600
+  is_highlight_shrink: false
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')

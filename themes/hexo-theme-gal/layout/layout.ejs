@@ -80,6 +80,9 @@
     }
 </script>
 <%- js(['js/hs.js', 'js/blog.js']) %>
+<% if(is_post()) { %>
+<%- js('js/bookmark.js') %>
+<% } %>
 <% if(theme.page_transition && theme.page_transition.enable) { %>
 <script>
     window.pageTransition = {

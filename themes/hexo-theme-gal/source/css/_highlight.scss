@@ -1,431 +1,217 @@
-$highlight_theme: hexo-theme-config('highlight_theme');
+// Shiki 代码高亮样式
+// Shiki 使用内联样式进行语法高亮，这里只定义结构样式
 
-@if $highlight_theme == github {
-  .highlight {
-    color: #333;
-    background: #f8f8f8;
+:root {
+  --hl-color: #e6e6e6 !important;
+  --hl-bg: #1e1e2e !important;
+  --hltools-bg: #181825 !important;
+  --hltools-color: #cdd6f4 !important;
+  --hlnumber-bg: #1e1e2e !important;
+  --hlnumber-color: #7f849c !important;
+  --hlscrollbar-bg: #45475a !important;
+  --hlexpand-bg: linear-gradient(180deg, rgba(30, 30, 46, 0.6), rgba(30, 30, 46, 0.9)) !important;
+}
 
-    pre {
-      color: #333;
-      background: #f8f8f8;
+// 修复 Font Awesome 图标兼容性（FA5 -> FA4）
+figure.shiki {
+  .shiki-tools {
+    .fas,
+    .far,
+    .fab {
+      font-family: FontAwesome !important;
     }
-
-    .comment,
-    .quote {
-      color: #998;
-      font-style: italic;
+    
+    .fa-angle-down {
+      &::before {
+        content: "\f107";
+      }
     }
-
-    .keyword,
-    .selector-tag,
-    .subst {
-      color: #333;
-      font-weight: bold;
-    }
-
-    .number,
-    .literal,
-    .variable,
-    .template-variable,
-    .tag .attr {
-      color: #008080;
-    }
-
-    .string,
-    .doctag {
-      color: #d14;
-    }
-
-    .title,
-    .section,
-    .selector-id {
-      color: #900;
-      font-weight: bold;
-    }
-
-    .subst {
-      font-weight: normal;
-    }
-
-    .type,
-    .class .title {
-      color: #458;
-      font-weight: bold;
-    }
-
-    .tag,
-    .name,
-    .attribute {
-      color: #000080;
-      font-weight: normal;
-    }
-
-    .regexp,
-    .link {
-      color: #009926;
-    }
-
-    .symbol,
-    .bullet {
-      color: #990073;
-    }
-
-    .built_in,
-    .builtin-name {
-      color: #0086b3;
-    }
-
-    .meta {
-      color: #999;
-      font-weight: bold;
-    }
-
-    .deletion {
-      background: #fdd;
-    }
-
-    .addition {
-      background: #dfd;
-    }
-
-    .emphasis {
-      font-style: italic;
-    }
-
-    .strong {
-      font-weight: bold;
+    
+    .fa-paste {
+      &::before {
+        content: "\f0ea";
+      }
     }
   }
-} @else if $highlight_theme == darcula {
-  .highlight {
-    background: #2b2b2b;
-    color: #bababa;
-
-    pre {
-      background: #2b2b2b;
-      color: #bababa;
-    }
-
-    .strong,
-    .emphasis {
-      color: #a8a8a2;
-    }
-
-    .bullet,
-    .quote,
-    .link,
-    .number,
-    .regexp,
-    .literal {
-      color: #6896ba;
-    }
-
-    .code,
-    .selector-class {
-      color: #a6e22e;
-    }
-
-    .emphasis {
-      font-style: italic;
-    }
-
-    .keyword,
-    .selector-tag,
-    .section,
-    .attribute,
-    .name,
-    .variable {
-      color: #cb7832;
-    }
-
-    .params {
-      color: #b9b9b9;
-    }
-
-    .string {
-      color: #6a8759;
-    }
-
-    .-subst,
-    .type,
-    .built_in,
-    .builtin-name,
-    .symbol,
-    .selector-id,
-    .selector-attr,
-    .selector-pseudo,
-    .template-tag,
-    .template-variable,
-    .addition {
-      color: #e0c46c;
-    }
-
-    .comment,
-    .deletion,
-    .meta {
-      color: #7f7f7f;
+  
+  .code-expand-btn {
+    .fa-angle-double-down {
+      &::before {
+        content: "\f103";
+      }
     }
   }
-} @else if $highlight_theme == railscasts {
-  .highlight {
-    background: #232323;
-    color: #e6e1dc;
+}
 
+// Shiki 代码块基础结构样式
+.shiki-container {
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  
+  pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    
+    &::-webkit-scrollbar {
+      height: 6px;
+      background-color: transparent;
+    }
+    
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 3px;
+    }
+  }
+  
+  code {
+    font-family: 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+    font-size: 13px;
+    tab-size: 2;
+  }
+}
+
+// Hexo 原生 highlight 类兼容
+.highlight {
+  overflow: auto;
+  padding: 0;
+  border-radius: 8px;
+  margin: 16px 0;
+  line-height: 1.6;
+  font-size: 13px;
+  
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+  
+  pre {
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    
     pre {
-      background: #232323;
-      color: #e6e1dc;
+      line-height: 1.6;
+      font-size: 13px;
     }
-
-    .comment,
-    .quote {
-      color: #bc9458;
-      font-style: italic;
+  }
+  
+  .gutter {
+    padding: 0 8px;
+    text-align: right;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+    
+    pre {
+      color: var(--hlnumber-color, #636d83);
     }
-
-    .keyword,
-    .selector-tag {
-      color: #c26230;
+  }
+  
+  .code {
+    padding: 0 16px;
+    
+    pre {
+      padding: 0;
     }
+  }
+}
 
-    .string,
-    .number,
-    .regexp,
-    .variable,
-    .template-variable {
-      color: #a5c261;
+// Shiki 工具栏样式
+.shiki-toolbar {
+  background-color: var(--hltools-bg, #21252b);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  .shiki-lang {
+    color: var(--hltools-color, #7d8590);
+    font-size: 12px;
+    text-transform: uppercase;
+  }
+  
+  .shiki-copy-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--hltools-color, #7d8590);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
     }
+  }
+}
 
-    .subst {
-      color: #519f50;
-    }
-
-    .tag,
-    .name {
-      color: #e8bf6a;
-    }
-
-    .type {
-      color: #da4939;
-    }
-
-
-    .symbol,
-    .bullet,
-    .built_in,
-    .builtin-name,
-    .attr,
-    .link {
-      color: #6d9cbe;
-    }
-
-    .params {
-      color: #d0d0ff;
-    }
-
-    .attribute {
-      color: #cda869;
-    }
-
-    .meta {
-      color: #9b859d;
-    }
-
-    .title,
-    .section {
-      color: #ffc66d;
-    }
-
-    .addition {
-      background-color: #144212;
-      color: #e6e1dc;
+// 行号样式
+.shiki-line-numbers {
+  counter-reset: line;
+  
+  .shiki-line {
+    counter-increment: line;
+    
+    &::before {
+      content: counter(line);
       display: inline-block;
-      width: 100%;
-    }
-
-    .deletion {
-      background-color: #600;
-      color: #e6e1dc;
-      display: inline-block;
-      width: 100%;
-    }
-
-    .selector-class {
-      color: #9b703f;
-    }
-
-    .selector-id {
-      color: #8b98ab;
-    }
-
-    .emphasis {
-      font-style: italic;
-    }
-
-    .strong {
-      font-weight: bold;
-    }
-
-    .link {
-      text-decoration: underline;
+      width: 2em;
+      margin-right: 1em;
+      text-align: right;
+      color: var(--hlnumber-color, #636d83);
+      user-select: none;
     }
   }
-} @else if $highlight_theme == monokai_sublime {
-  .highlight {
-    background: #23241f;
-    color: #f8f8f2;
+}
 
-    pre {
-      background: #23241f;
-      color: #f8f8f2;
-    }
-
-    .tag,
-    .subst {
-      color: #f8f8f2;
-    }
-
-    .strong,
-    .emphasis {
-      color: #a8a8a2;
-    }
-
-    .bullet,
-    .quote,
-    .number,
-    .regexp,
-    .literal,
-    .link {
-      color: #ae81ff;
-    }
-
-    .code,
-    .title,
-    .section,
-    .selector-class {
-      color: #a6e22e;
-    }
-
-    .strong {
-      font-weight: bold;
-    }
-
-    .emphasis {
-      font-style: italic;
-    }
-
-    .keyword,
-    .selector-tag,
-    .name,
-    .attr {
-      color: #f92672;
-    }
-
-    .symbol,
-    .attribute {
-      color: #66d9ef;
-    }
-
-    .params,
-    .class .title {
-      color: #f8f8f2;
-    }
-
-    .string,
-    .type,
-    .built_in,
-    .builtin-name,
-    .selector-id,
-    .selector-attr,
-    .selector-pseudo,
-    .addition,
-    .variable,
-    .template-variable {
-      color: #e6db74;
-    }
-
-    .comment,
-    .deletion,
-    .meta {
-      color: #75715e;
+// 代码块折叠/展开样式
+.shiki-expand {
+  position: relative;
+  
+  &.collapsed {
+    max-height: 300px;
+    overflow: hidden;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--hlexpand-bg, linear-gradient(180deg, rgba(40, 44, 52, 0.6), rgba(40, 44, 52, 0.9)));
+      pointer-events: none;
     }
   }
-} @else if $highlight_theme == atom-one-dark {
-  .highlight {
-    color: #abb2bf;
-    background: #282c34;
-
-    pre {
-      color: #abb2bf;
-      background: #282c34;
-    }
-
-    .comment,
-    .quote {
-      color: #5c6370;
-      font-style: italic;
-    }
-
-    .doctag,
-    .keyword,
-    .formula {
-      color: #c678dd;
-    }
-
-    .section,
-    .name,
-    .selector-tag,
-    .deletion,
-    .subst {
-      color: #e06c75;
-    }
-
-    .literal {
-      color: #56b6c2;
-    }
-
-    .string,
-    .regexp,
-    .addition,
-    .attribute,
-    .meta-string {
-      color: #98c379;
-    }
-
-    .built_in,
-    .class .title {
-      color: #e6c07b;
-    }
-
-    .attr,
-    .variable,
-    .template-variable,
-    .type,
-    .selector-class,
-    .elector-attr,
-    .selector-pseudo,
-    .number {
-      color: #d19a66;
-    }
-
-    .symbol,
-    .bullet,
-    .link,
-    .meta,
-    .selector-id,
-    .title {
-      color: #61aeee;
-    }
-
-    .emphasis {
-      font-style: italic;
-    }
-
-    .strong {
-      font-weight: bold;
-    }
-
-    .link {
-      text-decoration: underline;
+  
+  .shiki-expand-btn {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: background-color 0.2s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
     }
   }
 }
