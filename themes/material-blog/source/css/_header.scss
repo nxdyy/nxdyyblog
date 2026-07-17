@@ -1,0 +1,17 @@
+// ============================================
+// Header / Navigation - Material Design 3
+// Note: Main header styles are inline in header.ejs
+// This file handles responsive overrides and body offset
+// ============================================
+
+// Add top padding to body for fixed header
+body {
+  padding-top: var(--blog-header-height);
+}
+
+// Mobile overrides
+@media (max-width: 767px) {
+  :root {
+    --blog-header-height: 56px;
+  }
+}

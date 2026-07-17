@@ -1,0 +1,162 @@
+<!-- 归档页面内容 -->
+<div class="page-card archive-page" id="article-archive">
+    <div class="breadcrumb-nav">
+        <span class="material-symbols-outlined">home</span>
+        <a href="<%- config.url %>"><%= config.title %></a>
+        <span class="breadcrumb-sep">/</span>
+        <span>归档</span>
+    </div>
+    <div class="page-title">
+        <h1>
+            <span class="material-symbols-outlined">archive</span>
+            归档
+        </h1>
+    </div>
+    <div class="page-content archive-content">
+        <% if (site.posts.length > 0) {
+            var lastYear = null
+        %>
+        <% site.posts.sort('date', -1).forEach(function (post) {
+            var year = post.date.toDate().getFullYear()
+            if (lastYear !== +year) {
+                if (lastYear !== null) { %>
+                    </div>
+                <% } %>
+                <h2 class="archive-year"><%= year %>年</h2>
+                <div class="archive-year-group">
+                <% lastYear = year
+            } %>
+            <a href="<%- url_for(post.path) %>" class="archive-item">
+                <span class="material-symbols-outlined archive-item-icon">description</span>
+                <span class="archive-item-title"><%= post.title %></span>
+                <span class="archive-item-date">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <%= post.date.format('YYYY-MM-DD') %>
+                </span>
+            </a>
+        <% }) %>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无文章</p>
+        </div>
+        <% } %>
+    </div>
+</div>
+
+<style>
+.archive-page {
+    background: rgba(247, 242, 250, 0.75);
+    border: 1px solid rgba(202, 196, 208, 0.25);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+@media (prefers-color-scheme: dark) {
+    .archive-page {
+        background: rgba(29, 27, 32, 0.75);
+        border-color: rgba(73, 69, 79, 0.25);
+    }
+}
+.breadcrumb-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: var(--md-sys-color-surface-container);
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface-variant);
+}
+.breadcrumb-nav a {
+    color: var(--md-sys-color-primary);
+    text-decoration: none;
+}
+.breadcrumb-nav .breadcrumb-sep {
+    color: var(--md-sys-color-outline);
+}
+.breadcrumb-nav .material-symbols-outlined {
+    font-size: 18px;
+}
+.page-title {
+    text-align: center;
+    margin-bottom: 24px;
+}
+.page-title h1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--md-sys-color-on-surface);
+    margin: 0;
+}
+.page-title h1 .material-symbols-outlined {
+    font-size: 32px;
+    color: var(--md-sys-color-primary);
+}
+.archive-year {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+    margin: 28px 0 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--md-sys-color-primary);
+}
+.archive-year-group {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.archive-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface);
+    transition: background 0.2s ease;
+}
+.archive-item:hover {
+    background: var(--md-sys-color-surface-container-high);
+}
+.archive-item-icon {
+    font-size: 20px;
+    color: var(--md-sys-color-primary);
+    flex-shrink: 0;
+}
+.archive-item-title {
+    flex: 1;
+    font-size: 15px;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.archive-item-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+    flex-shrink: 0;
+}
+.archive-item-date .material-symbols-outlined {
+    font-size: 16px;
+}
+.empty-state {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--md-sys-color-on-surface-variant);
+}
+.empty-state .material-symbols-outlined {
+    font-size: 48px;
+    opacity: 0.5;
+    margin-bottom: 12px;
+    display: block;
+}
+</style>

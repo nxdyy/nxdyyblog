@@ -1,0 +1,31 @@
+<!-- 友情链接 -->
+<div class="tab-pane friend-links-tab-pane" id="sidebar-friend-links">
+  <md-list>
+    <% theme.friend_links.forEach(function (friend) { %>
+    <md-list-item>
+      <span class="material-symbols-outlined" slot="start">link</span>
+      <a href="<%= friend.link %>" target="_blank" rel="noopener noreferrer" class="friend-link-item">
+        <%= friend.name %>
+      </a>
+    </md-list-item>
+    <% }) %>
+  </md-list>
+</div>
+
+<style>
+  .friend-links-tab-pane {
+    padding: 8px 0;
+  }
+  .friend-links-tab-pane md-list {
+    padding: 0;
+  }
+  .friend-link-item {
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    font-size: 14px;
+    transition: color 0.2s ease;
+  }
+  .friend-link-item:hover {
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+</style>

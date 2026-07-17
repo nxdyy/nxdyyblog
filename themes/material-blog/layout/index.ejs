@@ -1,0 +1,24 @@
+<% if(theme.use_issue) { %>
+<%- partial('_partial/issue') %>
+<% } %>
+<div id="article-list">
+     <%
+        // 置顶文章: 在front-matter上设置 top: true
+        if (page.prev === 0) {
+            var topPosts = site.posts.filter(function (post) {
+                return typeof post.top !== 'undefined' && post.top === true
+            }).sort('date', -1)
+            topPosts.forEach(function (post) { %>
+            <%- partial('_partial/excerpt', { item: post, top: true }) %>
+            <% })
+        } %>
+     <% page.posts.filter(function (post) {
+         return typeof post.top === 'undefined' || post.top === false
+     }).forEach(function (post) { %>
+     <%- partial('_partial/excerpt', { item: post }) %>
+     <% }) %>
+</div>
+<%- partial('_partial/pagination', { page: page }) %>
+<% if(theme.use_comment === true) { %>
+    <div id="comments-template" style="display:none"></div>
+<% } %>

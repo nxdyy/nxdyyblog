@@ -1,0 +1,75 @@
+<!-- 公告/Issue 横幅 -->
+<div class="issue-banner" id="gal-issue">
+    <div class="issue-banner-inner">
+        <div class="issue-banner-content">
+            <span class="material-symbols-outlined">campaign</span>
+            <span class="issue-banner-text">
+                这里是公告内容
+                <br>
+                配置相关说明请看<strong>_config.yml</strong>
+            </span>
+        </div>
+        <button class="issue-close-btn" id="issue-close-btn" title="关闭公告" onclick="document.getElementById('gal-issue').style.display='none'; try{localStorage.setItem('issue-closed','true')}catch(e){}">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    </div>
+</div>
+<style>
+.issue-banner {
+    margin-bottom: 24px;
+    border-radius: 16px;
+    border: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+    background: var(--md-sys-color-surface-container-low, #f7f2fa);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    overflow: hidden;
+}
+.issue-banner-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    gap: 12px;
+}
+.issue-banner-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+.issue-banner-content .material-symbols-outlined {
+    font-size: 24px;
+    color: var(--md-sys-color-primary, #6750a4);
+    flex-shrink: 0;
+}
+.issue-banner-text {
+    font-size: 14px;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    line-height: 1.6;
+}
+.issue-close-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+    transition: background-color 0.2s ease;
+}
+.issue-close-btn:hover {
+    background: var(--md-sys-color-surface-container-high, #ece6f0);
+}
+</style>
+<script>
+    (function() {
+        try {
+            if (localStorage.getItem('issue-closed') === 'true') {
+                document.getElementById('gal-issue').style.display = 'none';
+            }
+        } catch(e) {}
+    })();
+</script>

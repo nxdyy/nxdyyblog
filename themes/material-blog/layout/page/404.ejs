@@ -1,0 +1,13 @@
+<!-- 404 页面 -->
+<md-filled-card class="error-page-card">
+    <div class="error-page-content">
+        <span class="material-symbols-outlined error-icon" style="font-size: 96px; color: var(--md-sys-color-primary);">explore_off</span>
+        <h1 class="error-title">404</h1>
+        <p class="error-message">页面未找到</p>
+        <p class="error-description">抱歉，您访问的页面不存在或已被移除。</p>
+        <md-filled-button href="<%- url_for('/') %>">
+            <span class="material-symbols-outlined" slot="icon">home</span>
+            返回首页
+        </md-filled-button>
+    </div>
+</md-filled-card>

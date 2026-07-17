@@ -60,6 +60,8 @@ shiki:
   highlight_lang: true
   highlight_height_limit: 600
   is_highlight_shrink: false
+  css_cdn: /vendor/shiki-plugin/codeblock.css
+  js_cdn: /vendor/shiki-plugin/codeblock.js
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -102,7 +104,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-gal
+theme: material-blog
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -138,3 +140,10 @@ sitemap:
   rel: false
   tags: true
   categories: true
+
+# hexo-generator-search 配置
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html

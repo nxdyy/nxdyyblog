@@ -1,0 +1,45 @@
+<!-- 热门标签 / 标签云 -->
+<div class="tab-pane tags-tab-pane" id="sidebar-tags">
+  <div class="tags-cloud">
+    <% site.tags.forEach(function (tag) { %>
+      <a href="<%- url_for(tag.path) %>" class="tag-chip">
+        <span class="material-symbols-outlined tag-chip-icon">sell</span>
+        <span class="tag-chip-label"><%= tag.name %></span>
+      </a>
+    <% }) %>
+  </div>
+</div>
+
+<style>
+  .tags-tab-pane {
+    padding: 16px;
+  }
+  .tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--md-sys-color-secondary-container, #e8def8);
+    color: var(--md-sys-color-on-secondary-container, #1d192b);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+  }
+  .tag-chip:hover {
+    background: var(--md-sys-color-primary-container, #eaddff);
+    color: var(--md-sys-color-on-primary-container, #21005d);
+    border-color: var(--md-sys-color-primary, #6750a4);
+  }
+  .tag-chip-icon {
+    font-size: 16px;
+  }
+</style>

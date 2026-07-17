@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+    <meta name="author" content="<%= config.author %>">
+    <% if (config.description) { %>
+    <meta name="description" content="<%= config.description %>">
+    <% } %>
+    <% let title = [config.title] %>
+    <% if (page.tag) {
+        title.unshift(`${__('tags')}: ${page.tag}`)
+    } %>
+    <% if (page.category) {
+        title.unshift(`${__('categories')}: ${page.category}`)
+    }%>
+    <% if (page.archive) {
+        title.unshift(`${__('archive_a')}`)
+    }%>
+    <% if (page.title) {
+        title.unshift(`${page.title}`)
+    }%>
+    <title><%= title.join(' | ') %></title>
+    <link rel="icon" href="/imgs/favicon.jpg" type="image/jpeg">
+    <link href="<%- config.url %>" rel="prefetch" />
+    <link rel="preconnect" href="<%- config.url %>" />
+    <link rel="dns-prefetch" href="<%- config.url %>" />
+
+    <!-- 本地字体 (Roboto + Noto Sans SC + Material Symbols) -->
+    <link href="/fonts/roboto.css" rel="stylesheet">
+    <link href="/fonts/noto-sans-sc.css" rel="stylesheet">
+    <link href="/fonts/material-symbols.css" rel="stylesheet">
+
+    <!-- 主题CSS -->
+    <%- css('css/style.css') %>
+
+    <!-- Material Web Import Map (本地) -->
+    <script type="importmap">
+    {
+        "imports": {
+            "@material/web/": "/vendor/@material/web/",
+            "lit/": "/vendor/lit/",
+            "lit-html/": "/vendor/lit-html/",
+            "lit-element/": "/vendor/lit-element/",
+            "@lit/reactive-element/": "/vendor/@lit/reactive-element/",
+            "@lit/context/": "/vendor/@lit/context/",
+            "tslib": "/vendor/tslib/tslib.es6.js"
+        }
+    }
+    </script>
+
+    <!-- 防止 Material Web 组件重复注册 -->
+    <script>
+        if (!window.__mdGuardInstalled) {
+            window.__mdGuardInstalled = true;
+            var origDefine = customElements.define.bind(customElements);
+            customElements.define = function(name, constructor, options) {
+                if (customElements.get(name)) return;
+                try {
+                    origDefine(name, constructor, options);
+                } catch(e) { /* ignore duplicate */ }
+            };
+        }
+    </script>
+
+    <!-- Material Web组件加载 -->
+    <script type="module">
+
+        // Core components
+        import '@material/web/button/filled-button.js';
+        import '@material/web/button/outlined-button.js';
+        import '@material/web/button/filled-tonal-button.js';
+        import '@material/web/button/text-button.js';
+        import '@material/web/button/elevated-button.js';
+        import '@material/web/icon/icon.js';
+        import '@material/web/iconbutton/icon-button.js';
+        import '@material/web/iconbutton/filled-icon-button.js';
+        import '@material/web/iconbutton/outlined-icon-button.js';
+        // Labs components (card, navigation, badge)
+        import '@material/web/labs/card/filled-card.js';
+        import '@material/web/labs/card/outlined-card.js';
+        import '@material/web/labs/card/elevated-card.js';
+        import '@material/web/labs/navigationbar/navigation-bar.js';
+        import '@material/web/labs/navigationtab/navigation-tab.js';
+        import '@material/web/labs/navigationdrawer/navigation-drawer.js';
+        import '@material/web/labs/navigationdrawer/navigation-drawer-modal.js';
+        import '@material/web/labs/badge/badge.js';
+        // Chips
+        import '@material/web/chips/assist-chip.js';
+        import '@material/web/chips/filter-chip.js';
+        import '@material/web/chips/input-chip.js';
+        import '@material/web/chips/suggestion-chip.js';
+        import '@material/web/chips/chip-set.js';
+        // Other components
+        import '@material/web/dialog/dialog.js';
+        import '@material/web/divider/divider.js';
+        import '@material/web/fab/fab.js';
+        import '@material/web/fab/branded-fab.js';
+        import '@material/web/list/list.js';
+        import '@material/web/list/list-item.js';
+        import '@material/web/menu/menu.js';
+        import '@material/web/menu/menu-item.js';
+        import '@material/web/progress/circular-progress.js';
+        import '@material/web/progress/linear-progress.js';
+
+        import '@material/web/select/filled-select.js';
+        import '@material/web/select/outlined-select.js';
+        import '@material/web/select/select-option.js';
+        import '@material/web/slider/slider.js';
+        import '@material/web/switch/switch.js';
+        import '@material/web/tabs/tabs.js';
+        import '@material/web/tabs/primary-tab.js';
+        import '@material/web/tabs/secondary-tab.js';
+        import '@material/web/textfield/filled-text-field.js';
+        import '@material/web/textfield/outlined-text-field.js';
+        import '@material/web/checkbox/checkbox.js';
+        import '@material/web/radio/radio.js';
+    </script>
+
+    <!-- Material Design 3 色彩主题变量 -->
+    <style>
+        :root {
+            --md-sys-color-primary: #<%= theme.material ? theme.material.primary_color : '6750A4' %>;
+            --md-sys-color-on-primary: #ffffff;
+            --md-sys-color-primary-container: #<%= theme.material ? theme.material.primary_color : '6750A4' %>20;
+            --md-sys-color-on-primary-container: #<%= theme.material ? theme.material.primary_color : '6750A4' %>;
+            --md-sys-color-secondary: #<%= theme.material ? theme.material.secondary_color : '625B71' %>;
+            --md-sys-color-on-secondary: #ffffff;
+            --md-sys-color-secondary-container: #<%= theme.material ? theme.material.secondary_color : '625B71' %>20;
+            --md-sys-color-tertiary: #<%= theme.material ? theme.material.tertiary_color : '7D5260' %>;
+            --md-sys-color-on-tertiary: #ffffff;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-on-surface-variant: #49454F;
+            --md-sys-color-outline: #79747E;
+            --md-sys-color-outline-variant: #CAC4D0;
+            --md-sys-color-surface-container: #F3EDF7;
+            --md-sys-color-surface-container-low: #F7F2FA;
+            --md-sys-color-surface-container-high: #ECE6F0;
+            --md-sys-color-surface-container-highest: #E6E0E9;
+            --md-sys-color-inverse-surface: #313033;
+            --md-sys-color-inverse-on-surface: #F4EFF4;
+            --md-sys-color-error: #B3261E;
+            --md-sys-color-on-error: #ffffff;
+            --md-sys-typescale-body-large: 400 1rem/1.5rem 'Roboto', 'Noto Sans SC', sans-serif;
+            --md-sys-typescale-body-medium: 400 0.875rem/1.25rem 'Roboto', 'Noto Sans SC', sans-serif;
+            --md-sys-typescale-title-large: 400 1.375rem/1.75rem 'Roboto', 'Noto Sans SC', sans-serif;
+            --md-sys-typescale-title-medium: 500 1rem/1.5rem 'Roboto', 'Noto Sans SC', sans-serif;
+            --md-sys-typescale-label-large: 500 0.875rem/1.25rem 'Roboto', 'Noto Sans SC', sans-serif;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root, body.dark-theme {
+                --md-sys-color-primary: #D0BCFF;
+                --md-sys-color-on-primary: #381E72;
+                --md-sys-color-primary-container: #4F378B;
+                --md-sys-color-on-primary-container: #EADDFF;
+                --md-sys-color-secondary: #CCC2DC;
+                --md-sys-color-on-secondary: #332D41;
+                --md-sys-color-secondary-container: #4A4458;
+                --md-sys-color-tertiary: #EFB8C8;
+                --md-sys-color-on-tertiary: #492532;
+                --md-sys-color-surface: #1C1B1F;
+                --md-sys-color-on-surface: #E6E1E5;
+                --md-sys-color-surface-variant: #49454F;
+                --md-sys-color-on-surface-variant: #CAC4D0;
+                --md-sys-color-outline: #938F99;
+                --md-sys-color-outline-variant: #49454F;
+                --md-sys-color-surface-container: #211F26;
+                --md-sys-color-surface-container-low: #1D1B20;
+                --md-sys-color-surface-container-high: #2B2930;
+                --md-sys-color-surface-container-highest: #36343B;
+                --md-sys-color-inverse-surface: #E6E1E5;
+                --md-sys-color-inverse-on-surface: #313033;
+                --md-sys-color-error: #F2B8B5;
+                --md-sys-color-on-error: #601410;
+            }
+        }
+    </style>
+
+    <!-- 小型设备背景图 -->
+    <style type="text/css">
+        @media (max-width: 768px) {
+            body {
+                background-color: var(--md-sys-color-surface);
+                background: url('/imgs/<%= theme.xs_bg_image %>');
+                background-attachment: fixed;
+            }
+        }
+
+        <% if(theme.custom_cursor === false) { %>
+        body {
+            cursor: auto !important;
+        }
+        a {
+            cursor: auto !important;
+        }
+        .back-to-top {
+            cursor: auto !important;
+        }
+        <% } %>
+    </style>
+
+    <!-- LeanCloud SDK -->
+    <% if(theme.leancloud.appid && theme.leancloud.appkey) { %>
+    <script src="//cdn1.lncld.net/static/js/3.4.2/av-min.js"></script>
+    <script>
+        AV.init({
+            appId: '<%= theme.leancloud.appid %>',
+            appKey: '<%= theme.leancloud.appkey %>'
+        })
+    </script>
+    <% } %>
+</head>

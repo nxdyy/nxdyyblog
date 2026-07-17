@@ -1,0 +1,110 @@
+<!-- 最热文章小工具 (需要 LeanCloud) -->
+<aside id="sidebar-hot_posts">
+  <div class="sidebar-widget hot-posts-widget hidden-xs" data-aos="fade-up" data-aos-duration="2000">
+    <md-outlined-card>
+      <div class="widget-header">
+        <div class="widget-header-title">
+          <span class="material-symbols-outlined widget-header-icon">local_fire_department</span>
+          <span>最热文章</span>
+        </div>
+        <div class="widget-header-actions">
+          <md-icon-button class="panel-toggle" aria-label="折叠">
+            <span class="material-symbols-outlined">expand_less</span>
+          </md-icon-button>
+          <md-icon-button class="panel-remove" aria-label="关闭">
+            <span class="material-symbols-outlined">close</span>
+          </md-icon-button>
+        </div>
+      </div>
+      <div class="widget-content">
+        <md-list>
+          <!-- 热门文章由 LeanCloud SDK 动态填充 -->
+        </md-list>
+      </div>
+    </md-outlined-card>
+  </div>
+</aside>
+
+<script>
+  (function() {
+    var toggleBtn = document.querySelector('#sidebar-hot_posts .panel-toggle');
+    var removeBtn = document.querySelector('#sidebar-hot_posts .panel-remove');
+    var content = document.querySelector('#sidebar-hot_posts .widget-content');
+    if (toggleBtn && content) {
+      toggleBtn.addEventListener('click', function() {
+        var isHidden = content.style.display === 'none';
+        content.style.display = isHidden ? '' : 'none';
+        var icon = toggleBtn.querySelector('.material-symbols-outlined');
+        icon.textContent = isHidden ? 'expand_less' : 'expand_more';
+      });
+    }
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function() {
+        var widget = document.querySelector('#sidebar-hot_posts .hot-posts-widget');
+        if (widget) widget.style.display = 'none';
+      });
+    }
+  })();
+</script>
+
+<style>
+  .hot-posts-widget {
+    margin-bottom: 16px;
+  }
+  .hot-posts-widget md-outlined-card {
+    width: 100%;
+    --md-card-container-color: var(--md-sys-color-surface-container-low, #f7f2fa);
+  }
+  .widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+  }
+  .widget-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+  }
+  .widget-header-icon {
+    color: #e64a19;
+  }
+  .widget-header-actions {
+    display: flex;
+    align-items: center;
+  }
+  .widget-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .widget-content md-list {
+    padding: 0;
+  }
+  .widget-content md-list-item {
+    --md-list-item-label-text-size: 13px;
+  }
+  .hot-posts-widget .post-link {
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .hot-posts-widget .post-link:hover {
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+  .hot-posts-widget .fire-icon {
+    color: #e64a19;
+    font-size: 16px;
+    margin-right: 4px;
+    vertical-align: middle;
+  }
+  @media (max-width: 768px) {
+    .hot-posts-widget {
+      display: none;
+    }
+  }
+</style>

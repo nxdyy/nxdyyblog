@@ -1,0 +1,137 @@
+<%- partial('_partial/head') %>
+<body class="<%= theme.material && theme.material.theme_mode === 'dark' ? 'dark-theme' : '' %>">
+    <!-- 加载中提示 -->
+    <div id="page-loader">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">页面加载中...</div>
+    </div>
+    <!-- 背景轮播图功能 -->
+    <%- partial('_partial/slideshow.ejs') %>
+    <!-- 欧尼酱功能 -->
+    <% if(theme.open_oni === true) { %>
+    <%- partial('_partial/oni.ejs') %>
+    <% } %>
+    <!-- 顶部导航栏 -->
+    <%- partial('_partial/header') %>
+    <!-- 主内容区域 -->
+    <main id="gal-body">
+        <div class="material-content-grid">
+            <div class="material-main-content" id="mainstay">
+                <%- body %>
+            </div>
+            <% if (is_home()) { %>
+            <aside class="material-sidebar" id="sidebar">
+                <%- partial('_partial/sidebar') %>
+            </aside>
+            <% } %>
+        </div>
+    </main>
+    <!-- 页脚 -->
+    <%- partial('_partial/footer') %>
+
+    <!-- 背景轮播配置 -->
+    <script>
+        window.slideConfig = {
+            prefix: '<%- theme.slide_background.use_url ? theme.slide_background.prefix : url_for(`imgs/${theme.slide_background.prefix}`) %>',
+            ext: '<%- theme.slide_background.ext %>',
+            maxCount: '<%- theme.slide_background.max_count %>'
+        }
+    </script>
+
+    <!-- SPA路由 -->
+    <script src="<%- url_for('js/router.js') %>"></script>
+
+    <!-- 背景轮播脚本 -->
+    <script src="<%- url_for('js/slideshow.js') %>"></script>
+
+    <!-- 输入特效 -->
+    <% if(theme.power_mode) { %>
+    <script src="<%- url_for('js/activate-power-mode.js') %>"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof POWERMODE !== 'undefined') {
+                POWERMODE.colorful = '<%= theme.power_mode.colorful %>';
+                POWERMODE.shake = '<%= theme.power_mode.shake %>';
+                document.body.addEventListener('input', POWERMODE);
+            }
+        });
+    </script>
+    <% } %>
+
+    <!-- 书签功能 (文章页) -->
+    <% if(is_post()) { %>
+    <script src="<%- url_for('js/bookmark.js') %>"></script>
+    <% } %>
+
+    <!-- 页面转场 -->
+    <% if(theme.page_transition && theme.page_transition.enable) { %>
+    <script>
+        window.pageTransition = {
+            enable: true,
+            animation: '<%- theme.page_transition.animation %>',
+            duration: <%- theme.page_transition.duration %>
+        }
+    </script>
+    <script src="<%- url_for('js/page-transition.js') %>"></script>
+    <% } %>
+
+    <!-- 欧尼酱脚本 -->
+    <% if(theme.open_oni === true) { %>
+    <script src="<%- url_for('js/oni.js') %>"></script>
+    <% } %>
+
+    <!-- LeanCloud文章统计 -->
+    <% if(theme.leancloud.appid && theme.leancloud.appkey) { %>
+    <script>
+        window.hot_posts_count = '<%= config.per_page %>'
+    </script>
+    <script src="<%- url_for('js/comment/leancloud.js') %>"></script>
+    <% } %>
+
+    <!-- 评论系统 -->
+    <% if(theme.use_comment === true && (is_home() || page.comments === true)) { %>
+    <script>
+        if (window.commentConfig) {
+            window.commentConfig.id = '<%= page.date %>'
+            window.commentConfig.owner = '<%= theme.comment.gitment.owner %>'
+            window.commentConfig.repo = '<%= theme.comment.gitment.repo %>'
+            window.commentConfig.client_id = '<%= theme.comment.gitment.oauth.client_id %>'
+            window.commentConfig.client_secret = '<%= theme.comment.gitment.oauth.client_secret %>'
+            window.commentConfig.redirect_uri = '<%= theme.comment.gitment.oauth.redirect_uri %>'
+        } else {
+            window.commentConfig = {
+                id: '<%= page.date %>',
+                owner: '<%= theme.comment.gitment.owner %>',
+                repo: '<%= theme.comment.gitment.repo %>',
+                client_id: '<%= theme.comment.gitment.oauth.client_id %>',
+                client_secret: '<%= theme.comment.gitment.oauth.client_secret %>',
+                redirect_uri: '<%= theme.comment.gitment.oauth.redirect_uri %>'
+            }
+        }
+    </script>
+    <script src="<%- url_for('js/comment/gitment.js') %>"></script>
+    <% } %>
+
+    <!-- Shiki代码高亮 -->
+    <script src="<%- url_for('js/shiki-highlight.js') %>"></script>
+
+    <!-- Material Web组件初始化脚本 -->
+    <script src="<%- url_for('js/material-init.js') %>"></script>
+
+    <!-- 主题初始化 -->
+    <script src="<%- url_for('js/blog.js') %>"></script>
+
+    <!-- 页面加载完成, 隐藏loader -->
+    <script>
+        window.addEventListener('load', function() {
+            var loader = document.getElementById('page-loader');
+            if (loader) {
+                loader.classList.add('loaded');
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

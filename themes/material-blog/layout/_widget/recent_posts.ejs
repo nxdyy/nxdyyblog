@@ -1,0 +1,128 @@
+<!-- 近期文章小工具 -->
+<aside id="sidebar-recent_posts">
+  <div class="sidebar-widget recent-posts-widget">
+      <div class="widget-header">
+        <div class="widget-header-title">
+          <span class="material-symbols-outlined widget-header-icon">schedule</span>
+          <span>近期文章</span>
+        </div>
+        <div class="widget-header-actions">
+          <md-icon-button class="panel-toggle" aria-label="折叠">
+            <span class="material-symbols-outlined">expand_less</span>
+          </md-icon-button>
+          <md-icon-button class="panel-remove" aria-label="关闭">
+            <span class="material-symbols-outlined">close</span>
+          </md-icon-button>
+        </div>
+      </div>
+      <div class="widget-content">
+        <div class="recent-posts-list">
+          <% site.posts.sort('date', -1).slice(0, 10).forEach(function (post) { %>
+          <a href="<%- url_for(post.path) %>" class="recent-post-item">
+            <span class="material-symbols-outlined recent-post-icon">article</span>
+            <span class="recent-post-title"><%= post.title %></span>
+          </a>
+          <% }) %>
+        </div>
+      </div>
+  </div>
+</aside>
+
+<script>
+  (function() {
+    var toggleBtn = document.querySelector('#sidebar-recent_posts .panel-toggle');
+    var removeBtn = document.querySelector('#sidebar-recent_posts .panel-remove');
+    var content = document.querySelector('#sidebar-recent_posts .widget-content');
+    if (toggleBtn && content) {
+      toggleBtn.addEventListener('click', function() {
+        var isHidden = content.style.display === 'none';
+        content.style.display = isHidden ? '' : 'none';
+        var icon = toggleBtn.querySelector('.material-symbols-outlined');
+        icon.textContent = isHidden ? 'expand_less' : 'expand_more';
+      });
+    }
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function() {
+        var widget = document.querySelector('#sidebar-recent_posts .recent-posts-widget');
+        if (widget) widget.style.display = 'none';
+      });
+    }
+  })();
+</script>
+
+<style>
+  .recent-posts-widget {
+    margin-bottom: 16px;
+  }
+  .recent-posts-widget {
+    background: var(--md-sys-color-surface-container-low, #f7f2fa);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+  }
+  .widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+  }
+  .widget-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+  }
+  .widget-header-icon {
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+  .widget-header-actions {
+    display: flex;
+    align-items: center;
+  }
+  .widget-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .recent-posts-list {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+  }
+  .recent-post-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 16px;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    font-size: 13px;
+    line-height: 1.5;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+    transition: background-color 0.2s ease;
+  }
+  .recent-post-item:last-child {
+    border-bottom: none;
+  }
+  .recent-post-item:hover {
+    background: var(--md-sys-color-surface-container-high, #ece6f0);
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+  .recent-post-icon {
+    font-size: 18px;
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+    flex-shrink: 0;
+  }
+  .recent-post-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  @media (max-width: 768px) {
+    .recent-posts-widget {
+      display: none;
+    }
+  }
+</style>

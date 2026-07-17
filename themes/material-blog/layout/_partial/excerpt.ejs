@@ -1,0 +1,59 @@
+<div class="excerpt-card article-body" data-aos="fade-up">
+    <% if(typeof top !== 'undefined' && top === true) { %>
+    <div class="excerpt-pin-badge">
+        <span class="material-symbols-outlined">push_pin</span>
+    </div>
+    <% } %>
+    <div class="excerpt-inner">
+        <div class="excerpt-cover">
+            <a href="<%- url_for(item.path) %>">
+                <% var num = Math.floor(Math.random() * theme.default_preview.length) %>
+                <img src="<%- item.preview ? item.preview : (/https?:\/\//.test(theme.default_preview[num]) ? theme.default_preview[num] : url_for(`imgs/preview/${theme.default_preview[num]}`)) %>" alt="<%= item.title %>">
+            </a>
+        </div>
+        <div class="excerpt-body">
+            <h2 class="excerpt-title">
+                <a href="<%- url_for(item.path) %>"><%= item.title %></a>
+            </h2>
+            <div class="excerpt-meta">
+                <span class="excerpt-date">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <%= item.date.format('YYYY-MM-DD') %>
+                </span>
+                <% if(item.tags.data.length > 0) { %>
+                <span class="excerpt-tag">
+                    <span class="material-symbols-outlined">label</span>
+                    <% item.tags.data.forEach(function (tag, index) { %>
+                    <a href="<%- url_for(tag.path) %>"><%= tag.name %></a><%= index === item.tags.data.length - 1 ? '' : ', ' %>
+                    <% }) %>
+                </span>
+                <% } %>
+            </div>
+            <% if(theme.show_excerpt !== false) { %>
+            <div class="excerpt-content">
+                <%
+                var excerptText = '';
+                if (item.preview_text) {
+                    excerptText = markdown(item.preview_text);
+                } else if (item.excerpt) {
+                    excerptText = item.excerpt;
+                } else if (theme.auto_excerpt && theme.auto_excerpt.enable && item.content) {
+                    var rawContent = item.content.replace(/<[^>]+>/g, '');
+                    var autoLength = theme.auto_excerpt.length || 50;
+                    excerptText = rawContent.length > autoLength ? rawContent.substring(0, autoLength) + '...' : rawContent;
+                } else {
+                    excerptText = item.excerpt;
+                }
+                %>
+                <%- excerptText %>
+            </div>
+            <% } %>
+            <div class="excerpt-actions">
+                <a href="<%- url_for(item.path) %>" class="read-more-btn">
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                    阅读全文
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

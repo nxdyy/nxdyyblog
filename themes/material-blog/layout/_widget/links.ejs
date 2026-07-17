@@ -1,0 +1,44 @@
+<!-- 个人链接 -->
+<div class="tab-pane links-tab-pane" id="sidebar-links">
+  <div class="links-list">
+    <% theme.links.forEach(function (item) { %>
+    <a href="<%= item.link %>" target="_blank" rel="noopener noreferrer" class="link-item">
+      <span class="material-symbols-outlined link-item-icon">open_in_new</span>
+      <span class="link-item-label"><%= item.name %></span>
+    </a>
+    <% }) %>
+  </div>
+</div>
+
+<style>
+  .links-tab-pane {
+    padding: 16px;
+  }
+  .links-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    font-size: 14px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  .link-item:hover {
+    background: var(--md-sys-color-surface-container-high, #ece6f0);
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+  .link-item-icon {
+    font-size: 20px;
+    color: var(--md-sys-color-on-surface-variant, #49454f);
+  }
+  .link-item:hover .link-item-icon {
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+</style>

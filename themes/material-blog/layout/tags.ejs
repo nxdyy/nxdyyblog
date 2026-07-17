@@ -1,0 +1,33 @@
+<md-filled-card class="page-card" id="article-tags">
+    <div class="breadcrumb-nav">
+        <span class="material-symbols-outlined">home</span>
+        <a href="<%- config.url %>"><%= config.title %></a>
+        <span class="breadcrumb-separator">/</span>
+        <span>标签</span>
+    </div>
+    <div class="page-title">
+        <h1>
+            <span class="material-symbols-outlined">label</span>
+            <a href="<%- url_for('tags') %>">标签集合</a>
+        </h1>
+    </div>
+    <md-divider></md-divider>
+    <div class="page-content">
+        <% if (site.tags.length > 0) { %>
+        <div class="chip-set-wrap">
+            <md-chip-set>
+                <% site.tags.forEach(function (tag) { %>
+                <md-assist-chip label="<%= tag.name %>(<%= tag.posts.length %>)" href="<%- url_for(tag.path) %>">
+                    <span class="material-symbols-outlined" slot="icon">label</span>
+                </md-assist-chip>
+                <% }) %>
+            </md-chip-set>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无标签</p>
+        </div>
+        <% } %>
+    </div>
+</md-filled-card>

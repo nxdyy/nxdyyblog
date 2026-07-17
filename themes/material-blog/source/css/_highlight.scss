@@ -1,0 +1,217 @@
+// ============================================
+// Code Highlighting (Shiki) - Material Design 3
+// ============================================
+
+// CSS custom properties for code themes
+:root {
+  --hl-color: #e6e6e6;
+  --hl-bg: #1e1e2e;
+  --hltools-bg: #181825;
+  --hltools-color: #cdd6f4;
+  --hlnumber-bg: #1e1e2e;
+  --hlnumber-color: #7f849c;
+  --hlscrollbar-bg: #45475a;
+  --hlexpand-bg: linear-gradient(180deg, rgba(30, 30, 46, 0.6), rgba(30, 30, 46, 0.9));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hl-color: #cdd6f4;
+    --hl-bg: #1e1e2e;
+    --hltools-bg: #11111b;
+    --hltools-color: #a6adc8;
+    --hlnumber-bg: #1e1e2e;
+    --hlnumber-color: #585b70;
+    --hlscrollbar-bg: #313244;
+    --hlexpand-bg: linear-gradient(180deg, rgba(30, 30, 46, 0.6), rgba(30, 30, 46, 0.95));
+  }
+}
+
+// Shiki code block container
+.shiki-container,
+.shiki-wrapper,
+figure.shiki {
+  border-radius: var(--md-sys-shape-corner-medium);
+  overflow: hidden;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: var(--hl-bg);
+
+  pre {
+    margin: 0;
+    padding: 16px;
+    overflow-x: auto;
+    background-color: transparent;
+    color: var(--hl-color);
+
+    &::-webkit-scrollbar {
+      height: 6px;
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--hlscrollbar-bg);
+      border-radius: var(--md-sys-shape-corner-full);
+    }
+  }
+
+  code {
+    font-family: 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+    font-size: 13px;
+    tab-size: 2;
+    color: var(--hl-color);
+  }
+}
+
+// Hexo native highlight compatibility
+.highlight {
+  overflow: auto;
+  padding: 0;
+  border-radius: var(--md-sys-shape-corner-medium);
+  margin: 16px 0;
+  line-height: 1.6;
+  font-size: 13px;
+  background-color: var(--hl-bg);
+
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+  }
+
+  pre {
+    margin: 0;
+    padding: 16px;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+    color: var(--hl-color);
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    pre {
+      line-height: 1.6;
+      font-size: 13px;
+    }
+  }
+
+  .gutter {
+    padding: 0 8px;
+    text-align: right;
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: var(--hlnumber-bg);
+
+    pre {
+      color: var(--hlnumber-color);
+      user-select: none;
+    }
+  }
+
+  .code {
+    padding: 0 16px;
+
+    pre {
+      padding: 0;
+    }
+  }
+}
+
+// Shiki toolbar
+.shiki-toolbar {
+  background-color: var(--hltools-bg);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .shiki-lang {
+    color: var(--hltools-color);
+    font-size: var(--md-sys-typescale-label-medium-size);
+    font-weight: var(--md-sys-typescale-label-medium-weight);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .shiki-copy-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: var(--hltools-color);
+    padding: 4px 12px;
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-size: var(--md-sys-typescale-label-medium-size);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+  }
+}
+
+// Line numbers
+.shiki-line-numbers {
+  counter-reset: line;
+
+  .shiki-line {
+    counter-increment: line;
+
+    &::before {
+      content: counter(line);
+      display: inline-block;
+      width: 2em;
+      margin-right: 1em;
+      text-align: right;
+      color: var(--hlnumber-color);
+      user-select: none;
+    }
+  }
+}
+
+// Code block expand/collapse
+.shiki-expand {
+  position: relative;
+
+  &.collapsed {
+    max-height: 300px;
+    overflow: hidden;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: var(--hlexpand-bg);
+      pointer-events: none;
+    }
+  }
+
+  .shiki-expand-btn {
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: var(--md-sys-shape-corner-full);
+    cursor: pointer;
+    font-size: var(--md-sys-typescale-label-medium-size);
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+}

@@ -1,0 +1,117 @@
+<!-- 随机文章小工具 -->
+<aside id="sidebar-random_posts">
+  <div class="sidebar-widget random-posts-widget" data-aos="fade-up" data-aos-duration="2000">
+    <md-outlined-card>
+      <div class="widget-header">
+        <div class="widget-header-title">
+          <span class="material-symbols-outlined widget-header-icon">shuffle</span>
+          <span>随机文章</span>
+        </div>
+        <div class="widget-header-actions">
+          <md-icon-button class="panel-toggle" aria-label="折叠">
+            <span class="material-symbols-outlined">expand_less</span>
+          </md-icon-button>
+          <md-icon-button class="panel-remove" aria-label="关闭">
+            <span class="material-symbols-outlined">close</span>
+          </md-icon-button>
+        </div>
+      </div>
+      <div class="widget-content">
+        <md-list>
+          <%
+            var randResults = [];
+            var randCount = Math.min(site.posts.length, 10);
+            for (var i = 0; i < randCount; i++) {
+              var randNum = Math.floor(Math.random() * site.posts.length);
+              while (randResults.indexOf(randNum) !== -1) {
+                randNum = Math.floor(Math.random() * site.posts.length);
+              }
+              randResults.push(randNum);
+            }
+          %>
+          <% site.posts.filter(function(e, i) { return randResults.indexOf(i) !== -1; }).forEach(function (post) { %>
+          <md-list-item>
+            <span class="material-symbols-outlined" slot="start">article</span>
+            <a href="<%- url_for(post.path) %>" class="post-link"><%= post.title %></a>
+          </md-list-item>
+          <% }) %>
+        </md-list>
+      </div>
+    </md-outlined-card>
+  </div>
+</aside>
+
+<script>
+  (function() {
+    var toggleBtn = document.querySelector('#sidebar-random_posts .panel-toggle');
+    var removeBtn = document.querySelector('#sidebar-random_posts .panel-remove');
+    var content = document.querySelector('#sidebar-random_posts .widget-content');
+    if (toggleBtn && content) {
+      toggleBtn.addEventListener('click', function() {
+        var isHidden = content.style.display === 'none';
+        content.style.display = isHidden ? '' : 'none';
+        var icon = toggleBtn.querySelector('.material-symbols-outlined');
+        icon.textContent = isHidden ? 'expand_less' : 'expand_more';
+      });
+    }
+    if (removeBtn) {
+      removeBtn.addEventListener('click', function() {
+        var widget = document.querySelector('#sidebar-random_posts .random-posts-widget');
+        if (widget) widget.style.display = 'none';
+      });
+    }
+  })();
+</script>
+
+<style>
+  .random-posts-widget {
+    margin-bottom: 16px;
+  }
+  .random-posts-widget md-outlined-card {
+    width: 100%;
+    --md-card-container-color: var(--md-sys-color-surface-container-low, #f7f2fa);
+  }
+  .random-posts-widget .widget-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant, #cac4d0);
+  }
+  .random-posts-widget .widget-header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+  }
+  .random-posts-widget .widget-header-icon {
+    color: var(--md-sys-color-tertiary, #7d5260);
+  }
+  .random-posts-widget .widget-header-actions {
+    display: flex;
+    align-items: center;
+  }
+  .random-posts-widget .widget-content {
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .random-posts-widget .widget-content md-list {
+    padding: 0;
+  }
+  .random-posts-widget .post-link {
+    text-decoration: none;
+    color: var(--md-sys-color-on-surface, #1c1b1f);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+  .random-posts-widget .post-link:hover {
+    color: var(--md-sys-color-primary, #6750a4);
+  }
+  @media (max-width: 768px) {
+    .random-posts-widget {
+      display: none;
+    }
+  }
+</style>

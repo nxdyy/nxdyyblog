@@ -1,0 +1,42 @@
+<!-- 搜索框小工具 -->
+<aside id="sidebar-search">
+  <div class="sidebar-widget search-widget" data-aos="fade-up" data-aos-duration="2000">
+    <form class="search-form" id="search-form" method="get"
+          action="<%- url_for('/search') %>/index.html">
+      <md-outlined-text-field
+        label="搜索文章"
+        type="search"
+        name="s"
+        id="searchInput"
+        autocomplete="off">
+        <span class="material-symbols-outlined" slot="leading-icon">search</span>
+      </md-outlined-text-field>
+      <md-icon-button type="submit" aria-label="搜索">
+        <span class="material-symbols-outlined">search</span>
+      </md-icon-button>
+    </form>
+  </div>
+</aside>
+
+<style>
+  .search-widget {
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+  .search-form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .search-form md-outlined-text-field {
+    flex: 1;
+  }
+  .search-form md-icon-button {
+    --md-sys-color-primary: var(--md-sys-color-primary, #6750a4);
+  }
+  @media (max-width: 768px) {
+    .search-widget {
+      display: none;
+    }
+  }
+</style>

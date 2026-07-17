@@ -1,0 +1,40 @@
+<!-- 分页组件 -->
+<% if(page.total > 0) { %>
+<% let num = Math.ceil(site.posts.length / config.index_generator.per_page) %>
+<div class="pagination-container">
+    <div class="pagination-inner">
+        <% if (page.prev > 0) { %>
+        <md-icon-button href="<%- url_for(page.prev_link) %>" title="上一页">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </md-icon-button>
+        <% } %>
+        <% if (page.current > 7) { %>
+        <md-text-button href="/">1</md-text-button>
+        <span class="pagination-ellipsis">…</span>
+        <% for(let i = page.current - 3; i < page.current; i++) { %>
+        <md-text-button href="<% if (i === 1) { %><%- url_for('') %><% } else { %><%- url_for(`page/${i}`) %><% } %>"><%= i %></md-text-button>
+        <% } %>
+        <% } else { %>
+        <% for(let i = 1; i < page.current; i++) { %>
+        <md-text-button href="<% if (i === 1) { %><%- url_for('') %><% } else { %><%- url_for(`page/${i}`) %><% } %>"><%= i %></md-text-button>
+        <% } %>
+        <% } %>
+        <md-filled-tonal-button disabled><%= page.current %></md-filled-tonal-button>
+        <% if(page.current + 7 < num) { %>
+        <% for(let i = page.current + 1; i <= page.current + 3; i++) { %>
+        <md-text-button href="<%- url_for(`page/${i}`) %>"><%= i %></md-text-button>
+        <% } %>
+        <span class="pagination-ellipsis">…</span>
+        <% } else { %>
+        <% for(let i = page.current + 1; i <= num; i++) { %>
+        <md-text-button href="<%- url_for(`page/${i}`) %>"><%= i %></md-text-button>
+        <% } %>
+        <% } %>
+        <% if (page.next > 0) { %>
+        <md-icon-button href="<%- url_for(page.next_link) %>" title="下一页">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </md-icon-button>
+        <% } %>
+    </div>
+</div>
+<% } %>

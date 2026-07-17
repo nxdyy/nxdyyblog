@@ -1,0 +1,7 @@
+<% if(page.title === 'search') { %>
+<%- partial('page/search', { item: page }) %>
+<% } else if(page.title === '404') { %>
+<%- partial('page/404') %>
+<% } else { %>
+<%- partial('_partial/article', { item: page, isPage: true } ) %>
+<% } %>

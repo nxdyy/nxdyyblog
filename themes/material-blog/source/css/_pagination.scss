@@ -1,0 +1,56 @@
+// ============================================
+// Pagination - Material Design 3
+// ============================================
+
+#gal-pagination {
+  .pagination-gal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin: 24px 0;
+    padding: 0;
+    list-style: none;
+
+    > li > a, > li > span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      color: var(--md-sys-color-on-surface);
+      background-color: var(--md-sys-color-surface-container-low);
+      border: 1px solid var(--md-sys-color-outline-variant);
+      border-radius: var(--md-sys-shape-corner-full);
+      font-size: var(--md-sys-typescale-label-large-size);
+      font-weight: var(--md-sys-typescale-label-large-weight);
+      text-decoration: none;
+      transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover, &:focus {
+        color: var(--md-sys-color-on-primary);
+        background-color: var(--md-sys-color-primary);
+        border-color: var(--md-sys-color-primary);
+        box-shadow: var(--md-sys-elevation-1);
+      }
+    }
+
+    > li.current > span {
+      color: var(--md-sys-color-on-primary);
+      background-color: var(--md-sys-color-primary);
+      border-color: var(--md-sys-color-primary);
+      box-shadow: var(--md-sys-elevation-1);
+      font-weight: 600;
+    }
+
+    // Disabled state
+    > li.disabled > a, > li.disabled > span {
+      color: var(--md-sys-color-outline);
+      background-color: transparent;
+      border-color: var(--md-sys-color-outline-variant);
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}

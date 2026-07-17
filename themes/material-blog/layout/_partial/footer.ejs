@@ -1,0 +1,125 @@
+<footer class="material-footer" id="gal-footer">
+    <div class="footer-inner">
+        <div class="footer-copyright">
+            Copyright © 2025-2026 <%= config.author ? config.author : '' %>
+            Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>.
+            Theme by <a href="https://github.com/nxdyy" target="_blank" rel="noopener">material-blog</a>
+        </div>
+        <% if(theme.custom_footer && theme.custom_footer.enable && theme.custom_footer.content) { %>
+        <div class="footer-custom">
+            <%- theme.custom_footer.content %>
+        </div>
+        <% } %>
+    </div>
+</footer>
+
+<!-- 回到顶端 FAB -->
+<div class="back-to-top-wrapper" id="back-to-top">
+    <md-fab aria-label="回到顶部" onclick="scrollToTop()">
+        <md-icon slot="icon">
+            <span class="material-symbols-outlined">keyboard_arrow_up</span>
+        </md-icon>
+    </md-fab>
+</div>
+
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        var backToTop = document.getElementById('back-to-top');
+        if (!backToTop) return;
+
+        var scrollThreshold = 300;
+        var ticking = false;
+
+        function updateBackToTopVisibility() {
+            if (window.scrollY > scrollThreshold) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateBackToTopVisibility);
+                ticking = true;
+            }
+        });
+    });
+</script>
+
+<style>
+    .material-footer {
+        background: var(--md-sys-color-surface-container);
+        color: var(--md-sys-color-on-surface-variant);
+        padding: 24px 16px;
+        margin-top: 48px;
+        text-align: center;
+        font-family: 'Roboto', 'Noto Sans SC', sans-serif;
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        border-top: 1px solid var(--md-sys-color-outline-variant);
+    }
+
+    .footer-inner {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .footer-copyright {
+        margin-bottom: 8px;
+    }
+
+    .footer-copyright a {
+        color: var(--md-sys-color-primary);
+        text-decoration: none;
+    }
+
+    .footer-copyright a:hover {
+        text-decoration: underline;
+    }
+
+    .footer-custom {
+        margin-top: 8px;
+        padding-top: 8px;
+        color: var(--md-sys-color-on-surface-variant);
+    }
+
+    .footer-custom a {
+        color: var(--md-sys-color-primary);
+        text-decoration: none;
+    }
+
+    .footer-custom a:hover {
+        text-decoration: underline;
+    }
+
+    .back-to-top-wrapper {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(20px);
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .back-to-top-wrapper.visible {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    md-fab {
+        --md-fab-container-color: var(--md-sys-color-primary-container);
+        --md-fab-icon-color: var(--md-sys-color-on-primary-container);
+    }
+</style>

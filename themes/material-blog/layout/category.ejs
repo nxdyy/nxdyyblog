@@ -1,0 +1,40 @@
+<md-filled-card class="page-card" id="article-category">
+    <div class="breadcrumb-nav">
+        <span class="material-symbols-outlined">home</span>
+        <a href="<%- config.url %>"><%= config.title %></a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="<%- url_for('categories') %>">目录</a>
+        <span class="breadcrumb-separator">/</span>
+        <span><%= page.category %></span>
+    </div>
+    <div class="page-title">
+        <h1>
+            <span class="material-symbols-outlined">folder</span>
+            <a href="<%- url_for(page.path) %>"><%= page.category %></a>
+        </h1>
+    </div>
+    <md-divider></md-divider>
+    <div class="page-content">
+        <% if (page.posts.length > 0) { %>
+        <md-list>
+            <% page.posts.forEach(function (post) { %>
+            <md-list-item>
+                <span class="material-symbols-outlined" slot="start">article</span>
+                <div slot="headline">
+                    <a href="<%- url_for(post.path) %>"><%= post.title %></a>
+                </div>
+                <div slot="supporting-text">
+                    <span class="material-symbols-outlined" style="font-size: 16px; width: 16px; height: 16px;">calendar_today</span>
+                    <%= post.date.format('YYYY-MM-DD') %>
+                </div>
+            </md-list-item>
+            <% }) %>
+        </md-list>
+        <% } else { %>
+        <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无属于该目录的文章</p>
+        </div>
+        <% } %>
+    </div>
+</md-filled-card>

@@ -1,0 +1,33 @@
+<md-filled-card class="page-card" id="article-categories">
+    <div class="breadcrumb-nav">
+        <span class="material-symbols-outlined">home</span>
+        <a href="<%- config.url %>"><%= config.title %></a>
+        <span class="breadcrumb-separator">/</span>
+        <span>目录</span>
+    </div>
+    <div class="page-title">
+        <h1>
+            <span class="material-symbols-outlined">folder</span>
+            <a href="<%- url_for('categories') %>">目录集合</a>
+        </h1>
+    </div>
+    <md-divider></md-divider>
+    <div class="page-content">
+        <% if (site.categories.length > 0) { %>
+        <div class="chip-set-wrap">
+            <md-chip-set>
+                <% site.categories.forEach(function (category) { %>
+                <md-assist-chip label="<%= category.name %>(<%= category.posts.length %>)" href="<%- url_for(category.path) %>">
+                    <span class="material-symbols-outlined" slot="icon">folder</span>
+                </md-assist-chip>
+                <% }) %>
+            </md-chip-set>
+        </div>
+        <% } else { %>
+        <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无目录</p>
+        </div>
+        <% } %>
+    </div>
+</md-filled-card>

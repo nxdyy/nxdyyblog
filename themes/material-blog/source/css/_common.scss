@@ -1,0 +1,523 @@
+// ============================================
+// Global / Base Styles - Material Design 3
+// ============================================
+
+// Selection
+::selection {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+// Reset & Base
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  min-height: 100%;
+}
+
+body {
+  font-family: var(--md-sys-typescale-body-large-font);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  font-weight: var(--md-sys-typescale-body-large-weight);
+  color: var(--md-sys-color-on-background);
+  background-color: var(--md-sys-color-background);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-full);
+  border: 2px solid transparent;
+  background-clip: content-box;
+
+  &:hover {
+    background-color: var(--md-sys-color-outline);
+  }
+}
+
+// Links
+a {
+  color: var(--md-sys-color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--md-sys-color-on-primary-container);
+    text-decoration: none;
+  }
+}
+
+// Images
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--md-sys-shape-corner-small);
+  vertical-align: middle;
+}
+
+// Lists
+ul {
+  list-style-type: none;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--md-sys-typescale-title-large-font);
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.3;
+}
+
+// Body container
+#gal-body {
+  padding: var(--blog-container-padding) 0;
+  min-height: calc(100vh - var(--blog-header-height));
+}
+
+// Content article - Markdown rendered content
+.content-article {
+  text-align: justify;
+  font-family: var(--md-sys-typescale-body-large-font);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  color: var(--md-sys-color-on-surface);
+
+  // Paragraphs
+  p {
+    font-size: var(--md-sys-typescale-body-large-size);
+    margin: 0 0 20px 0;
+    line-height: 1.8;
+
+    > a > img {
+      display: block;
+    }
+  }
+
+  // Headings
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--md-sys-color-on-surface);
+    margin: 24px 0 16px;
+    padding-top: 12px;
+  }
+
+  h1 {
+    font-size: var(--md-sys-typescale-headline-large-size);
+    line-height: var(--md-sys-typescale-headline-large-line-height);
+  }
+
+  h2 {
+    font-size: var(--md-sys-typescale-headline-medium-size);
+    line-height: var(--md-sys-typescale-headline-medium-line-height);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  }
+
+  h3 {
+    font-size: var(--md-sys-typescale-title-large-size);
+    line-height: var(--md-sys-typescale-title-large-line-height);
+  }
+
+  h4 {
+    font-size: var(--md-sys-typescale-title-medium-size);
+    line-height: var(--md-sys-typescale-title-medium-line-height);
+  }
+
+  // Lists
+  ul, ol {
+    border-left: 3px solid var(--md-sys-color-primary);
+    background-color: var(--md-sys-color-surface-container-low);
+    padding: 16px 16px 8px 32px;
+    margin: 0 0 20px;
+    border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
+  }
+
+  ul {
+    padding-left: 24px;
+  }
+
+  ul li, ol li {
+    font-size: var(--md-sys-typescale-body-large-size);
+    line-height: 1.8;
+    margin: 0 0 8px;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  // Blockquote
+  blockquote {
+    border-left: 4px solid var(--md-sys-color-tertiary);
+    background-color: var(--md-sys-color-tertiary-container);
+    color: var(--md-sys-color-on-tertiary-container);
+    padding: 16px 20px;
+    margin: 0 0 20px;
+    border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
+
+    p {
+      font-size: var(--md-sys-typescale-body-large-size);
+      color: var(--md-sys-color-on-tertiary-container);
+      font-weight: 400;
+      line-height: 1.6;
+    }
+  }
+
+  // Inline code
+  code {
+    word-break: break-all;
+    font-size: 0.875em;
+    font-family: 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+    background-color: var(--md-sys-color-surface-container-high);
+    color: var(--md-sys-color-on-surface);
+    padding: 2px 6px;
+    border-radius: var(--md-sys-shape-corner-extra-small);
+  }
+
+  // Highlight (code block wrapper)
+  .highlight {
+    overflow: auto;
+    padding: 0;
+    border-radius: var(--md-sys-shape-corner-small);
+    margin: 16px 0;
+    line-height: 1.6;
+    font-size: 13px;
+
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    table {
+      width: 100%;
+
+      pre {
+        border: 0;
+        border-radius: 0;
+        line-height: 1.6;
+        font-size: 13px;
+      }
+    }
+  }
+
+  // Tables
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    border-radius: var(--md-sys-shape-corner-small);
+    overflow: hidden;
+
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--md-sys-color-outline-variant);
+      font-size: var(--md-sys-typescale-body-medium-size);
+    }
+
+    th {
+      background-color: var(--md-sys-color-surface-container-high);
+      font-weight: 500;
+      color: var(--md-sys-color-on-surface);
+    }
+
+    td {
+      color: var(--md-sys-color-on-surface-variant);
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background-color: var(--md-sys-color-surface-container);
+    }
+  }
+
+  // Horizontal rule
+  hr {
+    border: none;
+    height: 1px;
+    background-color: var(--md-sys-color-outline-variant);
+    margin: 24px 0;
+  }
+
+  // Strong / Bold
+  strong, b {
+    font-weight: 600;
+    color: var(--md-sys-color-on-surface);
+  }
+
+  // Emphasis
+  em, i {
+    font-style: italic;
+  }
+
+  // Del
+  del {
+    text-decoration: line-through;
+    color: var(--md-sys-color-outline);
+  }
+}
+
+// Footer
+#gal-footer {
+  display: block;
+  text-align: center;
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 40px 20px;
+  font-size: var(--md-sys-typescale-body-small-size);
+  background-color: var(--md-sys-color-surface-container);
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+
+  a {
+    color: var(--md-sys-color-primary);
+
+    &:hover {
+      color: var(--md-sys-color-on-primary-container);
+      text-decoration: none;
+    }
+  }
+}
+
+// Go to top button
+#gal-gotop {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  height: 48px;
+  width: 48px;
+  background-color: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  display: none;
+  z-index: 999;
+  border-radius: var(--md-sys-shape-corner-full);
+  border: none;
+  box-shadow: var(--md-sys-elevation-2);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+
+  &:hover {
+    box-shadow: var(--md-sys-elevation-4);
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+
+  > i, > svg {
+    font-size: 24px;
+    line-height: 48px;
+    text-align: center;
+    display: block;
+  }
+}
+
+// Breadcrumb
+.breadcrumb {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-medium);
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  font-size: var(--md-sys-typescale-body-medium-size);
+
+  a {
+    color: var(--md-sys-color-primary);
+  }
+}
+
+.breadcrumb-gal {
+  background-color: var(--md-sys-color-surface-container-low);
+  box-shadow: var(--md-sys-elevation-1);
+  margin-bottom: 24px;
+  border-radius: var(--md-sys-shape-corner-medium);
+  padding: 12px 20px;
+}
+
+// Labels / Tags (global)
+.label-gal {
+  display: inline-block;
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  margin-right: 4px;
+  padding: 4px 12px;
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  line-height: var(--md-sys-typescale-label-medium-line-height);
+  border-radius: var(--md-sys-shape-corner-small);
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  > a {
+    color: inherit;
+  }
+
+  &:hover {
+    background-color: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+  }
+}
+
+// Alert (common)
+.alert-gal {
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: var(--md-sys-shape-corner-small);
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+// Button base
+.btn {
+  font-size: var(--md-sys-typescale-label-large-size);
+  font-weight: var(--md-sys-typescale-label-large-weight);
+  padding: 8px 24px;
+  border-radius: var(--md-sys-shape-corner-full);
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+// Close button
+.close {
+  font-size: 20px;
+  font-weight: normal;
+  color: var(--md-sys-color-on-surface-variant);
+  opacity: 1;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:hover, &:focus {
+    color: var(--md-sys-color-on-surface);
+    opacity: 0.8;
+  }
+}
+
+// Form control
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: var(--md-sys-typescale-body-large-size);
+  font-family: var(--md-sys-typescale-body-large-font);
+  color: var(--md-sys-color-on-surface);
+  background-color: var(--md-sys-color-surface-container);
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-corner-extra-small);
+  outline: none;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    border-color: var(--md-sys-color-primary);
+    border-width: 2px;
+    padding: 11px 15px;
+  }
+
+  &::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+  }
+}
+
+// Utility: Container
+.container-md3 {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--blog-container-padding);
+}
+
+// Utility: visually hidden
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+// Android 16 Frosted Glass Effect
+.material-header,
+.excerpt-card,
+.article-card,
+.article-body,
+.sidebar-widget,
+.tabs-widget,
+.issue-banner,
+#gal-footer {
+    backdrop-filter: blur(20px) saturate(1.8);
+    -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+.material-header {
+    background-color: rgba(243, 237, 247, 0.8) !important;
+    border-bottom: 1px solid rgba(202, 196, 208, 0.3) !important;
+}
+
+.excerpt-card {
+    background-color: rgba(247, 242, 250, 0.75) !important;
+    border: 1px solid rgba(202, 196, 208, 0.25) !important;
+}
+
+.article-card,
+.article-body {
+    background-color: rgba(247, 242, 250, 0.75) !important;
+    border: 1px solid rgba(202, 196, 208, 0.25) !important;
+}
+
+.sidebar-widget,
+.tabs-widget {
+    background-color: rgba(247, 242, 250, 0.75) !important;
+    border: 1px solid rgba(202, 196, 208, 0.25) !important;
+}
+
+.issue-banner {
+    background-color: rgba(247, 242, 250, 0.75) !important;
+    border: 1px solid rgba(202, 196, 208, 0.25) !important;
+}
+
+#gal-footer {
+    background-color: rgba(243, 237, 247, 0.7) !important;
+    border-top: 1px solid rgba(202, 196, 208, 0.3) !important;
+}
+
+// Dark theme glass
+@media (prefers-color-scheme: dark) {
+    .material-header {
+        background-color: rgba(33, 31, 38, 0.8) !important;
+        border-bottom-color: rgba(73, 69, 79, 0.3) !important;
+    }
+    .excerpt-card,
+    .article-card,
+    .article-body,
+    .sidebar-widget,
+    .tabs-widget,
+    .issue-banner {
+        background-color: rgba(29, 27, 32, 0.75) !important;
+        border-color: rgba(73, 69, 79, 0.25) !important;
+    }
+    #gal-footer {
+        background-color: rgba(33, 31, 38, 0.7) !important;
+        border-top-color: rgba(73, 69, 79, 0.3) !important;
+    }
+}

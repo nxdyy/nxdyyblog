@@ -1,0 +1,162 @@
+// ============================================
+// Excerpt / Card Styles (Homepage) - Material Design 3
+// ============================================
+
+.excerpt-card {
+    background: var(--md-sys-color-surface-container-low);
+    border-radius: 16px;
+    margin-bottom: 24px;
+    overflow: hidden;
+    box-shadow: var(--md-sys-elevation-1);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    position: relative;
+
+    &:hover {
+        box-shadow: var(--md-sys-elevation-3);
+        transform: translateY(-2px);
+    }
+}
+
+.excerpt-inner {
+    display: flex;
+    flex-direction: row;
+}
+
+.excerpt-cover {
+    flex-shrink: 0;
+    width: 240px;
+    height: 180px;
+    overflow: hidden;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    &:hover img {
+        transform: scale(1.05);
+    }
+}
+
+.excerpt-body {
+    flex: 1;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-width: 0;
+}
+
+.excerpt-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    line-height: 1.4;
+
+    a {
+        color: var(--md-sys-color-on-surface);
+        text-decoration: none;
+
+        &:hover {
+            color: var(--md-sys-color-primary);
+        }
+    }
+}
+
+.excerpt-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--md-sys-color-on-surface-variant);
+
+    .material-symbols-outlined {
+        font-size: 16px;
+    }
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    a {
+        color: var(--md-sys-color-primary);
+        text-decoration: none;
+    }
+}
+
+.excerpt-content {
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--md-sys-color-on-surface-variant);
+    margin-bottom: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-height: 1.4em;
+}
+
+.excerpt-actions {
+    margin-top: auto;
+}
+
+.read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 20px;
+    border-radius: 20px;
+    background: var(--md-sys-color-primary);
+    color: var(--md-sys-color-on-primary);
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+
+    .material-symbols-outlined {
+        font-size: 18px;
+    }
+
+    &:hover {
+        background: var(--md-sys-color-primary-container);
+        color: var(--md-sys-color-on-primary-container);
+        box-shadow: var(--md-sys-elevation-1);
+    }
+}
+
+.excerpt-pin-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 1;
+
+    .material-symbols-outlined {
+        font-size: 28px;
+        color: var(--md-sys-color-error);
+    }
+}
+
+// Mobile: stack vertically
+@media (max-width: 767px) {
+    .excerpt-inner {
+        flex-direction: column;
+    }
+
+    .excerpt-cover {
+        width: 100%;
+        height: 200px;
+    }
+
+    .excerpt-body {
+        padding: 16px;
+    }
+
+    .excerpt-title {
+        font-size: 18px;
+    }
+}
