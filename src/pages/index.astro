@@ -1,0 +1,42 @@
+---
+// 首页：公告 + 文章摘要列表 + 分页
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ExcerptCard from '../components/ExcerptCard.astro';
+import Pagination from '../components/Pagination.astro';
+import { POSTS_PER_PAGE, SITE, sortPostsDesc } from '../lib/utils';
+import { theme } from '../config/theme';
+
+const allPosts = sortPostsDesc(await getCollection('blog'));
+const posts = allPosts.slice(0, POSTS_PER_PAGE);
+const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
+
+// 置顶文章
+const topPosts = allPosts.filter((p: any) => p.data.top === true);
+const normalPosts = posts.filter((p: any) => p.data.top !== true);
+---
+
+<BaseLayout description={SITE.description}>
+  {
+    theme.issue.enable && (
+      <div class="issue-banner" id="gal-issue">
+        <div class="issue-banner-inner">
+          <div class="issue-banner-content">
+            <span class="material-symbols-outlined">campaign</span>
+            <span class="issue-banner-text">
+              <Fragment set:html={theme.issue.html} />
+            </span>
+          </div>
+          <button class="issue-close-btn" id="issue-close-btn" title="关闭公告" aria-label="关闭公告">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+      </div>
+    )
+  }
+  <div id="article-list">
+    {topPosts.map((post: any) => <ExcerptCard post={post} top={true} />)}
+    {normalPosts.map((post: any) => <ExcerptCard post={post} />)}
+  </div>
+  <Pagination current={1} total={totalPages} />
+</BaseLayout>

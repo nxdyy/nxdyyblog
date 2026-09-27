@@ -1,0 +1,66 @@
+---
+// 文章详情页（迁移自 post.ejs / article.ejs）
+import { getCollection, render } from 'astro:content';
+import type { CollectionEntry } from 'astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Bookmark from '../components/Bookmark.astro';
+import { formatDate, getPostUrl, postUrl, previewFor } from '../lib/utils';
+import { theme } from '../config/theme';
+import { stripMarkdown } from '../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { slug: postUrl(post.id, post.data.date).replace(/^\/|\/$/g, '') },
+    props: { post },
+  }));
+}
+
+type Props = { post: CollectionEntry<'blog'> };
+const { post } = Astro.props;
+const { Content } = await render(post);
+const url = getPostUrl(post);
+const cover = previewFor(post.data.title, theme.default_preview);
+---
+
+<BaseLayout title={post.data.title} description={stripMarkdown(post.body || '', 120)}>
+  <article class="article-card article-body" id="article">
+    <div class="article-breadcrumb">
+      <a href="/"><span class="material-symbols-outlined">home</span> 站点首页</a>
+      <span class="breadcrumb-sep">/</span>
+      <span>{post.data.title}</span>
+    </div>
+    <div class="article-cover">
+      <img src={cover} alt={post.data.title} />
+    </div>
+    <div class="article-header">
+      <h1 class="article-title">
+        <a href={url}>{post.data.title}</a>
+      </h1>
+      <div class="article-meta">
+        {
+          post.data.tags.length > 0 && (
+            <span class="article-tag">
+              <span class="material-symbols-outlined">label</span>
+              {post.data.tags.map((tag: string, i: number) => (
+                <>
+                  <a href={`/tags/${encodeURIComponent(tag)}/`}>{tag}</a>
+                  {i < post.data.tags.length - 1 && ', '}
+                </>
+              ))}
+            </span>
+          )
+        }
+        <span class="article-date">
+          <span class="material-symbols-outlined">calendar_today</span>
+          {formatDate(post.data.date)}
+        </span>
+      </div>
+    </div>
+    <md-divider></md-divider>
+    <div class="content-article">
+      <Content />
+    </div>
+  </article>
+  <Bookmark />
+</BaseLayout>

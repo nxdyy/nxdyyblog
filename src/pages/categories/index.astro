@@ -1,0 +1,52 @@
+---
+// 分类集合页
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { SITE } from '../../lib/utils';
+
+const posts = await getCollection('blog');
+const catMap = new Map<string, number>();
+for (const post of posts) {
+  for (const cat of post.data.categories) catMap.set(cat, (catMap.get(cat) ?? 0) + 1);
+}
+const categories = [...catMap.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="分类">
+  <md-filled-card class="page-card" id="article-categories">
+    <Breadcrumb labels={['分类']} homeTitle={SITE.title} />
+    <div class="page-title">
+      <h1>
+        <span class="material-symbols-outlined">folder</span>
+        <a href="/categories/">目录集合</a>
+      </h1>
+    </div>
+    <md-divider />
+    <div class="page-content">
+      {
+        categories.length > 0 ? (
+          <div class="chip-set-wrap">
+            <md-chip-set>
+              {categories.map(([cat, count]) => (
+                <md-assist-chip
+                  label={`${cat}(${count})`}
+                  href={`/categories/${encodeURIComponent(cat)}/`}
+                >
+                  <span class="material-symbols-outlined" slot="icon">
+                    folder
+                  </span>
+                </md-assist-chip>
+              ))}
+            </md-chip-set>
+          </div>
+        ) : (
+          <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无目录</p>
+          </div>
+        )
+      }
+    </div>
+  </md-filled-card>
+</BaseLayout>

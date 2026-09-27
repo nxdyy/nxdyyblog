@@ -1,0 +1,46 @@
+---
+// 单个标签下的文章列表
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { formatDate, getPostUrl, SITE, sortPostsDesc } from '../../../lib/utils';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const tags = [...new Set(posts.flatMap((p) => p.data.tags))];
+  return tags.map((tag) => ({
+    params: { tag },
+    props: { posts: sortPostsDesc(posts.filter((p) => p.data.tags.includes(tag))) },
+  }));
+}
+
+type Props = { posts: import('astro').CollectionEntry<'blog'>[] };
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`标签: ${tag}`}>
+  <div class="page-card" id="article-tag">
+    <Breadcrumb labels={['标签', tag!]} homeTitle={SITE.title} />
+    <div class="page-title">
+      <h1>
+        <span class="material-symbols-outlined">label</span>
+        {tag}
+      </h1>
+    </div>
+    <div class="post-list-page">
+      {
+        posts.map((post) => (
+          <a href={getPostUrl(post)} class="post-list-item">
+            <span class="material-symbols-outlined">description</span>
+            <span class="post-list-title">{post.data.title}</span>
+            <span class="post-list-date">
+              <span class="material-symbols-outlined">calendar_today</span>
+              {formatDate(post.data.date)}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

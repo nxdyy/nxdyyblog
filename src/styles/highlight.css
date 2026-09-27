@@ -1,0 +1,162 @@
+/* ============================================================
+   Shiki 代码块（构建期高亮 + 客户端增强：工具栏/行号/复制/展开）
+   迁移自 _highlight.scss
+   ============================================================ */
+
+.shiki-container {
+  border-radius: var(--md-sys-shape-corner-medium);
+  overflow: hidden;
+  margin: 16px 0;
+  font-size: 14px;
+  line-height: 1.6;
+  background-color: var(--hl-bg);
+}
+
+.shiki-container pre {
+  margin: 0;
+  padding: 16px;
+  overflow-x: auto;
+  background-color: transparent;
+  color: var(--hl-color);
+}
+
+.shiki-container pre::-webkit-scrollbar {
+  height: 6px;
+  background-color: transparent;
+}
+
+.shiki-container pre::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.shiki-container pre::-webkit-scrollbar-thumb {
+  background-color: var(--hlscrollbar-bg);
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+.shiki-container pre.astro-code {
+  border-radius: 0;
+  background-color: transparent !important;
+}
+
+.shiki-container pre.astro-code span {
+  font-style: normal;
+}
+
+.shiki-container code {
+  font-family: 'Cascadia Code', 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+  font-size: 13px;
+  tab-size: 2;
+  color: var(--hl-color);
+  background: none;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* 工具栏 */
+.shiki-toolbar {
+  background-color: var(--hltools-bg);
+  padding: 8px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.shiki-toolbar .shiki-lang {
+  color: var(--hltools-color);
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-weight: var(--md-sys-typescale-label-medium-weight);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.shiki-toolbar .shiki-copy-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--hltools-color);
+  padding: 4px 12px;
+  border-radius: var(--md-sys-shape-corner-full);
+  cursor: pointer;
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-family: inherit;
+  transition: all var(--m3-motion-duration-short) var(--m3-motion-easing-standard);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.shiki-toolbar .shiki-copy-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.shiki-toolbar .shiki-copy-btn.copied {
+  color: #a6e3a1;
+  border-color: rgba(166, 227, 161, 0.4);
+}
+
+/* 行号 */
+.shiki-container.shiki-line-numbers code {
+  display: block;
+}
+
+.shiki-container.shiki-line-numbers code .shiki-line {
+  display: block;
+  counter-increment: shiki-line;
+}
+
+.shiki-container.shiki-line-numbers code .shiki-line::before {
+  content: counter(shiki-line);
+  display: inline-block;
+  width: 2em;
+  margin-right: 1em;
+  text-align: right;
+  color: var(--hlnumber-color);
+  user-select: none;
+}
+
+.shiki-container.shiki-line-numbers code {
+  counter-reset: shiki-line;
+}
+
+/* 超高展开/收起 */
+.shiki-expand {
+  position: relative;
+}
+
+.shiki-expand.collapsed {
+  max-height: 600px;
+  overflow: hidden;
+}
+
+.shiki-expand.collapsed::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: var(--hlexpand-bg);
+  pointer-events: none;
+}
+
+.shiki-expand-btn {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: #fff;
+  padding: 4px 16px;
+  border-radius: var(--md-sys-shape-corner-full);
+  cursor: pointer;
+  font-size: var(--md-sys-typescale-label-medium-size);
+  font-family: inherit;
+  transition: background-color var(--m3-motion-duration-short) var(--m3-motion-easing-standard);
+}
+
+.shiki-expand-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

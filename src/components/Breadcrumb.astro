@@ -1,0 +1,14 @@
+---
+// 面包屑导航
+interface Props {
+  labels: string[];
+  homeTitle: string;
+}
+const { labels, homeTitle } = Astro.props;
+---
+
+<div class="breadcrumb-nav">
+  <span class="material-symbols-outlined">home</span>
+  <a href="/">{homeTitle}</a>
+  {labels.map((label) => <span class="breadcrumb-sep">/</span><span>{label}</span>)}
+</div>

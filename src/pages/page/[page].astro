@@ -1,0 +1,30 @@
+---
+// 分页页：与首页一致的摘要卡片风格（迁移自旧主题 page.ejs）
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ExcerptCard from '../../components/ExcerptCard.astro';
+import Pagination from '../../components/Pagination.astro';
+import { POSTS_PER_PAGE, sortPostsDesc } from '../../lib/utils';
+
+export async function getStaticPaths({ paginate }: import('astro').APIContext) {
+  const posts = sortPostsDesc(await getCollection('blog'));
+  // 与旧站一致：第 1 页即首页，不生成 /page/1/
+  return paginate(posts, { pageSize: POSTS_PER_PAGE }).filter(
+    (p) => p.params.page !== '1'
+  );
+}
+
+type Props = { page: import('astro').Page<CollectionEntry<'blog'>> };
+const { page } = Astro.props;
+
+// 置顶文章仅在首页展示，避免重复
+const posts = page.data.filter((p) => p.data.top !== true);
+---
+
+<BaseLayout title={`第 ${page.currentPage} 页`}>
+  <div id="article-list">
+    {posts.map((post) => <ExcerptCard post={post} />)}
+  </div>
+  <Pagination current={page.currentPage} total={page.lastPage} />
+</BaseLayout>

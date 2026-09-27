@@ -1,0 +1,136 @@
+---
+// 侧边栏（迁移自 sidebar.ejs + author/recent_posts/hot_tags/links 组件）
+import { formatDate, getPostUrl, sortPostsDesc } from '../lib/utils';
+import { theme } from '../config/theme';
+import { SITE } from '../lib/utils';
+
+interface Props {
+  posts: any[];
+  tags: { name: string; count: number; url: string }[];
+}
+const { posts, tags } = Astro.props;
+
+const recent = sortPostsDesc(posts).slice(0, 10);
+const showTabs = theme.sidebar.tags || theme.sidebar.links;
+---
+
+<div class="sidebar-column">
+  <!-- 作者信息 -->
+  <aside id="sidebar-author">
+    <div class="sidebar-widget author-widget">
+      <md-outlined-card>
+        <div class="author-card-header">
+          <span class="author-quote">&ldquo;</span>
+          {SITE.author}
+          <span class="author-quote">&rdquo;</span>
+        </div>
+        <div class="author-card-content">
+          <img
+            src="/imgs/avatar.jpg"
+            width="140"
+            height="140"
+            alt="个人头像"
+            class="author-image"
+            loading="lazy"
+          />
+          <p class="author-name">{SITE.author}</p>
+          <p class="author-description">{SITE.description}</p>
+        </div>
+      </md-outlined-card>
+    </div>
+  </aside>
+
+  <!-- 近期文章 -->
+  {
+    theme.sidebar.recent_posts && (
+      <aside id="sidebar-recent_posts">
+        <div class="sidebar-widget recent-posts-widget">
+          <div class="widget-header">
+            <div class="widget-header-title">
+              <span class="material-symbols-outlined widget-header-icon">schedule</span>
+              <span>近期文章</span>
+            </div>
+            <div class="widget-header-actions">
+              <md-icon-button class="panel-toggle" aria-label="折叠">
+                <span class="material-symbols-outlined">expand_less</span>
+              </md-icon-button>
+              <md-icon-button class="panel-remove" aria-label="关闭">
+                <span class="material-symbols-outlined">close</span>
+              </md-icon-button>
+            </div>
+          </div>
+          <div class="widget-content">
+            <div class="recent-posts-list">
+              {recent.map((post) => (
+                <a href={getPostUrl(post)} class="recent-post-item">
+                  <span class="material-symbols-outlined recent-post-icon">article</span>
+                  <span class="recent-post-title">{post.data.title}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </aside>
+    )
+  }
+
+  <!-- 标签 / 个人链接 Tab 切换区 -->
+  {
+    showTabs && (
+      <aside id="sidebar-tabs">
+        <div class="sidebar-widget tabs-widget">
+          <div class="tabs-header">
+            {theme.sidebar.tags && (
+              <button class="tab-btn active" data-tab="tags">
+                <span class="material-symbols-outlined">sell</span>
+                <span>热门标签</span>
+              </button>
+            )}
+            {theme.sidebar.links && (
+              <button class="tab-btn" data-tab="links">
+                <span class="material-symbols-outlined">link</span>
+                <span>个人链接</span>
+              </button>
+            )}
+          </div>
+
+          <div class="tabs-content">
+            {theme.sidebar.tags && (
+              <div class="tab-panel" id="panel-tags">
+                <div class="tags-cloud">
+                  {tags.map((tag) => (
+                    <a href={tag.url} class="tag-chip">
+                      <span class="material-symbols-outlined tag-chip-icon">sell</span>
+                      <span class="tag-chip-label">
+                        {tag.name}
+                        <small>({tag.count})</small>
+                      </span>
+                    </a>
+                  ))}
+                  {tags.length === 0 && <p style="color: var(--md-sys-color-on-surface-variant)">暂无标签</p>}
+                </div>
+              </div>
+            )}
+            {theme.sidebar.links && (
+              <div class="tab-panel" id="panel-links" style="display: none">
+                <div class="links-list">
+                  {theme.links.map((item) => (
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="link-item"
+                    >
+                      <span class="material-symbols-outlined link-item-icon">open_in_new</span>
+                      <span class="link-item-label">{item.name}</span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </aside>
+    )
+  }
+</div>

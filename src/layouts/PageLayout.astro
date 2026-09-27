@@ -1,0 +1,26 @@
+---
+// Markdown 内容页布局（面包屑 + 页面卡片 + 正文）
+import BaseLayout from './BaseLayout.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import { SITE } from '../lib/utils';
+
+interface Props {
+  frontmatter: { title: string };
+}
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title}>
+  <div class="page-card" id="page-content-card">
+    <Breadcrumb labels={[frontmatter.title]} homeTitle={SITE.title} />
+    <div class="page-title">
+      <h1>
+        <span class="material-symbols-outlined">article</span>
+        {frontmatter.title}
+      </h1>
+    </div>
+    <div class="content-article">
+      <slot />
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,146 @@
+---
+// Material 3 Expressive 主题全局布局
+import { SITE } from '../lib/utils';
+import { theme } from '../config/theme';
+import Header from '../components/react/Header';
+import SpaRouter from '../components/react/SpaRouter';
+import BackToTop from '../components/vue/BackToTop.vue';
+import Sidebar from '../components/Sidebar.astro';
+import { getCollection } from 'astro:content';
+
+// 主题样式
+import '../styles/tokens.css';
+import '../styles/base.css';
+import '../styles/header.css';
+import '../styles/sidebar.css';
+import '../styles/excerpt.css';
+import '../styles/article.css';
+import '../styles/pages.css';
+import '../styles/highlight.css';
+import '../styles/transition.css';
+import '../styles/slideshow.css';
+import '../styles/responsive.css';
+
+// 标签/分类数据（导航下拉 + 侧栏）
+const posts = await getCollection('blog');
+
+const tagCount = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) tagCount.set(tag, (tagCount.get(tag) ?? 0) + 1);
+}
+const tagEntries = [...tagCount.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5)
+  .map(([name, count]) => ({ name, count, url: `/tags/${encodeURIComponent(name)}/` }));
+
+const catCount = new Map<string, number>();
+for (const post of posts) {
+  for (const cat of post.data.categories) catCount.set(cat, (catCount.get(cat) ?? 0) + 1);
+}
+const catEntries = [...catCount.entries()]
+  .sort((a, b) => b[1] - a[1])
+  .slice(0, 5)
+  .map(([name, count]) => ({ name, count, url: `/categories/${encodeURIComponent(name)}/` }));
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** 隐藏侧栏（如 404） */
+  fluid?: boolean;
+}
+const { title, description = SITE.description, fluid = false } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.title}` : SITE.title;
+const canonical = new URL(Astro.url.pathname.replace(/\?.*$/, ''), Astro.site);
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="author" content={SITE.author} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="nxdyy, 博客, 摆烂小站" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/imgs/favicon.jpg" type="image/jpeg" />
+    <link href={SITE.url} rel="prefetch" />
+    <link rel="preconnect" href={SITE.url} />
+    <link rel="dns-prefetch" href={SITE.url} />
+
+    <!-- 本地字体 (Roboto + Noto Sans SC + Material Symbols) -->
+    <link href="/fonts/roboto.css" rel="stylesheet" />
+    <link href="/fonts/noto-sans-sc.css" rel="stylesheet" />
+    <link href="/fonts/material-symbols.css" rel="stylesheet" />
+
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <!-- 加载中提示 -->
+    <div id="page-loader">
+      <div class="loader-spinner"></div>
+      <div class="loader-text">页面加载中...</div>
+    </div>
+
+    <!-- 背景轮播图 -->
+    <section class="slideshow-container hidden-mobile" aria-hidden="true">
+      <ul class="cb-slideshow">
+        <li><span style="background-image: url('/imgs/slide/background1.webp')">天若</span></li>
+        <li><span style="background-image: url('/imgs/slide/background2.webp')">有情</span></li>
+        <li><span style="background-image: url('/imgs/slide/background3.webp')">天亦老</span></li>
+        <li><span style="background-image: url('/imgs/slide/background4.webp')">我为</span></li>
+        <li><span style="background-image: url('/imgs/slide/background5.webp')">长者</span></li>
+        <li><span style="background-image: url('/imgs/slide/background6.webp')">续一秒</span></li>
+      </ul>
+    </section>
+
+    <!-- 顶部导航栏（React 岛） -->
+    <Header client:load menu={theme.menu} siteTitle={SITE.title} tags={tagEntries} categories={catEntries} />
+
+    <!-- 主内容区域 -->
+    <main id="gal-body">
+      <div class="material-content-grid" style={fluid ? 'display: block;' : ''}>
+        <div class="material-main-content" id="mainstay">
+          <slot />
+        </div>
+        {
+          !fluid && (
+            <aside class="material-sidebar" id="sidebar">
+              <Sidebar posts={posts} tags={tagEntries} />
+            </aside>
+          )
+        }
+      </div>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="material-footer" id="gal-footer">
+      <div class="footer-inner">
+        <div class="footer-copyright">
+          Copyright © 2025 - {new Date().getFullYear()}
+          {SITE.author} Powered by <a href="https://astro.build/" target="_blank" rel="noopener">Astro</a>.
+          Theme by <a href="https://github.com/nxdyy" target="_blank" rel="noopener">material-blog</a>
+        </div>
+        <div class="footer-custom">
+          <Fragment set:html={theme.custom_footer} />
+        </div>
+      </div>
+    </footer>
+
+    <!-- 回到顶部（Vue 岛） -->
+    <BackToTop client:load />
+
+    <!-- SPA 路由（React 岛） -->
+    <SpaRouter
+      client:load
+      animation={theme.page_transition.animation}
+      duration={theme.page_transition.duration}
+    />
+
+    <!-- Material Web 组件注册 + 客户端增强 -->
+    <script>
+      import '../scripts/md';
+      import '../scripts/enhance';
+    </script>
+  </body>
+</html>

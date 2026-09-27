@@ -1,0 +1,49 @@
+---
+// 标签集合页
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { SITE } from '../../lib/utils';
+
+const posts = await getCollection('blog');
+const tagMap = new Map<string, number>();
+for (const post of posts) {
+  for (const tag of post.data.tags) tagMap.set(tag, (tagMap.get(tag) ?? 0) + 1);
+}
+const tags = [...tagMap.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="标签">
+  <md-filled-card class="page-card" id="article-tags">
+    <Breadcrumb labels={['标签']} homeTitle={SITE.title} />
+    <div class="page-title">
+      <h1>
+        <span class="material-symbols-outlined">label</span>
+        <a href="/tags/">标签集合</a>
+      </h1>
+    </div>
+    <md-divider />
+    <div class="page-content">
+      {
+        tags.length > 0 ? (
+          <div class="chip-set-wrap">
+            <md-chip-set>
+              {tags.map(([tag, count]) => (
+                <md-assist-chip label={`${tag}(${count})`} href={`/tags/${encodeURIComponent(tag)}/`}>
+                  <span class="material-symbols-outlined" slot="icon">
+                    label
+                  </span>
+                </md-assist-chip>
+              ))}
+            </md-chip-set>
+          </div>
+        ) : (
+          <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无标签</p>
+          </div>
+        )
+      }
+    </div>
+  </md-filled-card>
+</BaseLayout>

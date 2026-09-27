@@ -1,0 +1,56 @@
+---
+// 归档页
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { formatDate, getPostUrl, SITE, sortPostsDesc } from '../../lib/utils';
+
+const posts = sortPostsDesc(await getCollection('blog'));
+const byYear = new Map<number, typeof posts>();
+for (const post of posts) {
+  const year = post.data.date.getFullYear();
+  if (!byYear.has(year)) byYear.set(year, []);
+  byYear.get(year)!.push(post);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+---
+
+<BaseLayout title="归档">
+  <div class="page-card archive-page" id="article-archive">
+    <Breadcrumb labels={['归档']} homeTitle={SITE.title} />
+    <div class="page-title">
+      <h1>
+        <span class="material-symbols-outlined">archive</span>
+        归档
+      </h1>
+    </div>
+    <div class="page-content archive-content">
+      {
+        posts.length > 0 ? (
+          years.map((year) => (
+            <section>
+              <h2 class="archive-year">{year}年</h2>
+              <div class="archive-year-group">
+                {byYear.get(year)!.map((post) => (
+                  <a href={getPostUrl(post)} class="archive-item">
+                    <span class="material-symbols-outlined archive-item-icon">description</span>
+                    <span class="archive-item-title">{post.data.title}</span>
+                    <span class="archive-item-date">
+                      <span class="material-symbols-outlined">calendar_today</span>
+                      {formatDate(post.data.date)}
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </section>
+          ))
+        ) : (
+          <div class="empty-state">
+            <span class="material-symbols-outlined">info</span>
+            <p>暂无文章</p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,482 @@
+/* ============================================================
+   全局基础样式 - Material Design 3（迁移自 _common.scss）
+   ============================================================ */
+
+::selection {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  /* 锚点/哈希跳转时预留固定标题栏高度，避免目标内容嵌在标题栏下 */
+  scroll-padding-top: calc(var(--blog-header-height) + 16px);
+}
+
+body {
+  /* 顶部预留 fixed 标题栏空间，页面内容不再被标题栏覆盖 */
+  padding-top: var(--blog-header-height);
+  font-family: var(--md-sys-typescale-body-large-font);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  font-weight: var(--md-sys-typescale-body-large-weight);
+  color: var(--md-sys-color-on-background);
+  background-color: var(--md-sys-color-background);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-full);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-corner-full);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--md-sys-color-outline);
+}
+
+a {
+  color: var(--md-sys-color-primary);
+  text-decoration: none;
+  transition: color var(--m3-motion-duration-short) var(--m3-motion-easing-standard);
+}
+
+a:hover {
+  color: var(--md-sys-color-on-primary-container);
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--md-sys-shape-corner-small);
+  vertical-align: middle;
+}
+
+ul {
+  list-style-type: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--md-sys-typescale-title-large-font);
+  color: var(--md-sys-color-on-surface);
+  line-height: 1.3;
+}
+
+#gal-body {
+  padding: var(--blog-container-padding) 0;
+  min-height: calc(100vh - var(--blog-header-height));
+}
+
+/* ===== Markdown 正文 ===== */
+.content-article {
+  text-align: justify;
+  font-family: var(--md-sys-typescale-body-large-font);
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: var(--md-sys-typescale-body-large-line-height);
+  color: var(--md-sys-color-on-surface);
+}
+
+.content-article p {
+  font-size: var(--md-sys-typescale-body-large-size);
+  margin: 0 0 20px 0;
+  line-height: 1.8;
+}
+
+.content-article p > a > img {
+  display: block;
+}
+
+.content-article h1,
+.content-article h2,
+.content-article h3,
+.content-article h4,
+.content-article h5,
+.content-article h6 {
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--md-sys-color-on-surface);
+  margin: 24px 0 16px;
+  padding-top: 12px;
+}
+
+.content-article h1 {
+  font-size: var(--md-sys-typescale-headline-large-size);
+  line-height: var(--md-sys-typescale-headline-large-line-height);
+}
+
+.content-article h2 {
+  font-size: var(--md-sys-typescale-headline-medium-size);
+  line-height: var(--md-sys-typescale-headline-medium-line-height);
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.content-article h3 {
+  font-size: var(--md-sys-typescale-title-large-size);
+  line-height: var(--md-sys-typescale-title-large-line-height);
+}
+
+.content-article h4 {
+  font-size: var(--md-sys-typescale-title-medium-size);
+  line-height: var(--md-sys-typescale-title-medium-line-height);
+}
+
+.content-article ul,
+.content-article ol {
+  border-left: 3px solid var(--md-sys-color-primary);
+  background-color: var(--md-sys-color-surface-container-low);
+  padding: 16px 16px 8px 32px;
+  margin: 0 0 20px;
+  border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
+}
+
+.content-article ul {
+  list-style-type: disc;
+  padding-left: 24px;
+}
+
+.content-article ol {
+  list-style-type: decimal;
+}
+
+.content-article ul li,
+.content-article ol li {
+  font-size: var(--md-sys-typescale-body-large-size);
+  line-height: 1.8;
+  margin: 0 0 8px;
+  color: var(--md-sys-color-on-surface);
+}
+
+.content-article blockquote {
+  border-left: 4px solid var(--md-sys-color-tertiary);
+  background-color: var(--md-sys-color-tertiary-container);
+  color: var(--md-sys-color-on-tertiary-container);
+  padding: 16px 20px;
+  margin: 0 0 20px;
+  border-radius: 0 var(--md-sys-shape-corner-small) var(--md-sys-shape-corner-small) 0;
+}
+
+.content-article blockquote p {
+  font-size: var(--md-sys-typescale-body-large-size);
+  color: var(--md-sys-color-on-tertiary-container);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.content-article code {
+  word-break: break-all;
+  font-size: 0.875em;
+  font-family: 'Fira Code', 'Source Code Pro', 'Consolas', monospace;
+  background-color: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  padding: 2px 6px;
+  border-radius: var(--md-sys-shape-corner-extra-small);
+}
+
+.content-article table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  border-radius: var(--md-sys-shape-corner-small);
+  overflow: hidden;
+}
+
+.content-article th,
+.content-article td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  font-size: var(--md-sys-typescale-body-medium-size);
+}
+
+.content-article th {
+  background-color: var(--md-sys-color-surface-container-high);
+  font-weight: 500;
+  color: var(--md-sys-color-on-surface);
+}
+
+.content-article td {
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.content-article tr:last-child td {
+  border-bottom: none;
+}
+
+.content-article tr:hover td {
+  background-color: var(--md-sys-color-surface-container);
+}
+
+.content-article hr {
+  border: none;
+  height: 1px;
+  background-color: var(--md-sys-color-outline-variant);
+  margin: 24px 0;
+}
+
+.content-article strong,
+.content-article b {
+  font-weight: 600;
+  color: var(--md-sys-color-on-surface);
+}
+
+.content-article del {
+  text-decoration: line-through;
+  color: var(--md-sys-color-outline);
+}
+
+.content-article img {
+  margin: 12px auto;
+  display: inline-block;
+  width: auto;
+  border-radius: var(--md-sys-shape-corner-medium);
+}
+
+/* ===== 页脚 ===== */
+.material-footer {
+  background-color: var(--md-sys-color-surface-container);
+  color: var(--md-sys-color-on-surface-variant);
+  padding: 40px 20px;
+  margin-top: 48px;
+  text-align: center;
+  font-size: var(--md-sys-typescale-body-small-size);
+  line-height: 1.5;
+  border-top: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.material-footer .footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.material-footer a {
+  color: var(--md-sys-color-primary);
+}
+
+.material-footer a:hover {
+  color: var(--md-sys-color-on-primary-container);
+  text-decoration: none;
+}
+
+.material-footer .footer-copyright {
+  margin-bottom: 8px;
+}
+
+.material-footer .footer-custom {
+  margin-top: 8px;
+  padding-top: 8px;
+}
+
+/* ===== 磨砂半透明容器（毛玻璃）===== */
+.material-header,
+.excerpt-card,
+.article-card,
+.article-body,
+.page-card,
+.sidebar-widget,
+.tabs-widget,
+.issue-banner,
+.breadcrumb-nav,
+.article-breadcrumb,
+#gal-bookmark,
+.material-footer {
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+/* md 卡片内部自带不透明容器色，置为透明以露出宿主的磨砂背景 */
+md-outlined-card,
+md-filled-card,
+md-elevated-card {
+  --md-outlined-card-container-color: transparent;
+  --md-filled-card-container-color: transparent;
+  --md-elevated-card-container-color: transparent;
+}
+
+.material-header {
+  background-color: var(--blog-glass-bg-strong) !important;
+  border-bottom: 1px solid var(--blog-glass-border) !important;
+}
+
+.excerpt-card {
+  background-color: var(--blog-glass-bg) !important;
+  border: 1px solid var(--blog-glass-border) !important;
+}
+
+.article-card,
+.article-body,
+.page-card {
+  background-color: var(--blog-glass-bg) !important;
+  border: 1px solid var(--blog-glass-border) !important;
+}
+
+.sidebar-widget,
+.tabs-widget,
+.issue-banner {
+  background-color: var(--blog-glass-bg) !important;
+  border: 1px solid var(--blog-glass-border) !important;
+}
+
+/* 面包屑条 */
+.breadcrumb-nav,
+.article-breadcrumb {
+  background-color: var(--blog-glass-bg) !important;
+  border: 1px solid var(--blog-glass-border);
+}
+
+/* TOC 书签浮板 */
+#gal-bookmark {
+  background-color: var(--blog-glass-bg) !important;
+  border: 1px solid var(--blog-glass-border);
+}
+
+/* 下拉菜单：磨砂但保持可读性 */
+md-menu {
+  --md-menu-container-color: var(--blog-glass-bg-strong);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+
+.material-footer {
+  background-color: var(--blog-glass-bg-strong) !important;
+  border-top: 1px solid var(--blog-glass-border) !important;
+}
+
+/* ===== 通用页面卡片 / 面包屑 / 标题 ===== */
+.page-card {
+  border-radius: var(--md-sys-shape-corner-large);
+  padding: 24px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+.breadcrumb-nav,
+.article-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-corner-medium);
+  margin-bottom: 20px;
+  font-size: var(--md-sys-typescale-body-medium-size);
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.breadcrumb-nav a,
+.article-breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--md-sys-color-primary);
+  text-decoration: none;
+}
+
+.breadcrumb-nav .material-symbols-outlined,
+.article-breadcrumb .material-symbols-outlined {
+  font-size: 18px;
+}
+
+.breadcrumb-sep,
+.breadcrumb-separator {
+  color: var(--md-sys-color-outline);
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.page-title h1 {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--md-sys-color-on-surface);
+  margin: 0;
+}
+
+.page-title h1 a {
+  color: var(--md-sys-color-on-surface);
+  text-decoration: none;
+}
+
+.page-title h1 .material-symbols-outlined {
+  font-size: 32px;
+  color: var(--md-sys-color-primary);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+.empty-state .material-symbols-outlined {
+  font-size: 48px;
+  opacity: 0.5;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.chip-set-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  padding: 8px 0 16px;
+}
+
+/* Material Symbols 图标基础样式 */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  user-select: none;
+}
