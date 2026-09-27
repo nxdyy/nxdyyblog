@@ -147,3 +147,10 @@ search:
   field: post
   content: true
   format: html
+
+# Sass 编译配置 - 静默弃用警告
+node_sass:
+  quietDeps: true
+  silenceDeprecations:
+    - 'if-function'
+    - 'import'

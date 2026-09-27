@@ -3,9 +3,10 @@
 // ============================================
 
 // Main content area transition
+// 注意: 不能使用 will-change: transform, 否则会创建包含块,
+// 导致子元素 (如书签面板) 的 position: fixed 相对内容区而非视口定位
 #mainstay {
   transition: opacity 0.3s ease, transform 0.3s ease;
-  will-change: opacity, transform;
 }
 
 // Page transitioning state

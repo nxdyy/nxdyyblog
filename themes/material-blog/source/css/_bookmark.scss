@@ -3,9 +3,10 @@
 // ============================================
 
 #gal-bookmark {
-  position: absolute;
-  top: 100px;
+  position: fixed;
+  top: 50%;
   right: 20px;
+  transform: translateY(-50%);
   width: 260px;
   max-height: 60vh;
   z-index: 998;

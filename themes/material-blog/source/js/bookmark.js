@@ -117,16 +117,19 @@
       if (e.target.closest('.gal-bookmark-btn, #gal-bookmark-minimize')) return;
       dragging = true;
 
-      // 使用 offsetLeft/offsetTop（相对于 offsetParent）
-      baseLeft = widget.offsetLeft;
-      baseTop = widget.offsetTop;
+      // 使用 getBoundingClientRect (视口坐标, 含 transform 影响)
+      var rect = widget.getBoundingClientRect();
+      baseLeft = rect.left;
+      baseTop = rect.top;
       startCursorX = e.clientX;
       startCursorY = e.clientY;
 
-      // 首次拖拽时清除 right 定位，切换为 left 定位
+      // 首次拖拽时清除右侧定位与垂直居中, 切换为 left/top 定位
       if (widget.style.right !== 'auto') {
-        widget.style.left = widget.offsetLeft + 'px';
+        widget.style.left = rect.left + 'px';
+        widget.style.top = rect.top + 'px';
         widget.style.right = 'auto';
+        widget.style.transform = 'none';
       }
 
       e.preventDefault();
@@ -139,12 +142,11 @@
       var newLeft = baseLeft + dx;
       var newTop = baseTop + dy;
 
-      // 边界限制（相对于 offsetParent）
-      var parent = widget.offsetParent || document.documentElement;
-      var maxLeft = parent.clientWidth - widget.offsetWidth;
-      var maxTop = parent.scrollHeight - widget.offsetHeight;
+      // 边界限制 (fixed 定位, 相对视口); 顶部避开固定导航栏
+      var maxLeft = window.innerWidth - widget.offsetWidth;
+      var maxTop = window.innerHeight - widget.offsetHeight;
       newLeft = Math.max(0, Math.min(newLeft, maxLeft));
-      newTop = Math.max(0, Math.min(newTop, maxTop));
+      newTop = Math.max(72, Math.min(newTop, maxTop));
 
       widget.style.left = newLeft + 'px';
       widget.style.top = newTop + 'px';

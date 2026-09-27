@@ -3355,3 +3355,5 @@ themes/material-blog/source/vendor/tslib/tslib.js
 themes/material-blog/source/vendor/tslib/modules/index.d.ts
 themes/material-blog/source/vendor/tslib/modules/index.js
 themes/material-blog/source/vendor/tslib/modules/package.json
+_ref/material-web
+_ref/shiki

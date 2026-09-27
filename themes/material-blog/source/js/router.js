@@ -69,13 +69,21 @@
     var duration = transitionConfig.duration || 300;
     var animation = transitionConfig.animation || 'fade';
 
+    // 动画结束后清除内联样式, 避免残留 transform 影响 fixed 定位子元素
+    function finish() {
+      el.style.transition = '';
+      el.style.opacity = '';
+      el.style.transform = '';
+      callback();
+    }
+
     requestAnimationFrame(() => {
       if (animation === 'fade') {
         el.style.opacity = '0';
         el.style.transition = `opacity ${duration}ms ease`;
         requestAnimationFrame(() => {
           el.style.opacity = '1';
-          setTimeout(callback, duration);
+          setTimeout(finish, duration);
         });
       } else if (animation === 'slide') {
         el.style.opacity = '0';
@@ -84,7 +92,7 @@
         requestAnimationFrame(() => {
           el.style.opacity = '1';
           el.style.transform = 'translateX(0)';
-          setTimeout(callback, duration);
+          setTimeout(finish, duration);
         });
       } else if (animation === 'scale') {
         el.style.opacity = '0';
@@ -93,7 +101,7 @@
         requestAnimationFrame(() => {
           el.style.opacity = '1';
           el.style.transform = 'scale(1)';
-          setTimeout(callback, duration);
+          setTimeout(finish, duration);
         });
       } else {
         callback();
