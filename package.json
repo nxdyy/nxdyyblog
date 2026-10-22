@@ -16,7 +16,7 @@
     "@material/web": "^2.5.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
-    "astro": "^7.3.5",
+    "astro": "^7.4.1",
     "lit": "^3.3.3",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
